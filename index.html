@@ -1017,7 +1017,17 @@ function initAdminPayoutsSubscription() {
     adminPayoutRequests = snap.val() || {};
     renderAdminPayouts();
     updateAdminPayoutBadge();
+  }, (err) => {
+    console.error("payout read error:", err);
+  });
+
+  // Wire status filter
+  const pf = document.getElementById("payoutStatusFilter");
+  if (pf && !pf.dataset.wired) {
+    pf.dataset.wired = "1";
+    pf.addEventListener("change", renderAdminPayouts);
   }
+}
 /* ============================================================
    AGENT — PAYOUT REQUESTS
 ============================================================ */
