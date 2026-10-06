@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PAYVORA — Agent Commission Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+/* ===================== THEME VARIABLES ===================== */
+:root {
+  --bg-0:#07080d; --bg-1:#0b0d14; --bg-2:#111420;
+  --surface:rgba(22,26,38,.72); --surface-2:rgba(30,35,52,.6);
+  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.14);
+  --text:#e9edf5; --text-dim:#8a93a8; --text-mute:#5e6780;
+  --input-bg:rgba(10,12,20,.6);
+  --topbar-bg:rgba(7,8,13,.75);
+  --modal-bg:rgba(3,4,8,.7);
+  --hover-bg:rgba(255,255,255,.04);
+  --hover-bg-2:rgba(255,255,255,.08);
+  --table-hover:rgba(255,255,255,.025);
+  --table-border:rgba(255,255,255,.04);
+  --accent:#6c8cff; --accent-2:#8b6cff;
+  --accent-grad:linear-gradient(135deg,#6c8cff 0%,#8b6cff 100%);
+  --success:#2ecc8f; --warn:#f5a623; --danger:#ff5d6c; --info:#4fb4ff;
+  --radius:14px; --radius-sm:10px;
+  --shadow:0 20px 50px -20px rgba(0,0,0,.4);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+body[data-theme="light"] {
+  --bg-0:#f4f6fb; --bg-1:#ffffff; --bg-2:#f9fafb;
+  --surface:rgba(255,255,255,.85); --surface-2:rgba(255,255,255,.95);
+  --border:rgba(0,0,0,.08); --border-strong:rgba(0,0,0,.12);
+  --text:#0f172a; --text-dim:#64748b; --text-mute:#94a3b8;
+  --input-bg:#ffffff;
+  --topbar-bg:rgba(255,255,255,.85);
+  --modal-bg:rgba(15,23,42,.5);
+  --hover-bg:rgba(0,0,0,.03);
+  --hover-bg-2:rgba(0,0,0,.06);
+  --table-hover:rgba(0,0,0,.02);
+  --table-border:rgba(0,0,0,.05);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font);background:var(--bg-0);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit}
+.hidden{display:none!important}
+.muted{color:var(--text-dim);font-size:13px}
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow)}
+.auth-body{min-height:100vh;display:grid;place-items:center;background:radial-gradient(900px 500px at 15% -10%,rgba(108,140,255,.18),transparent 60%),radial-gradient(800px 500px at 100% 110%,rgba(139,108,255,.15),transparent 60%),var(--bg-0);padding:24px}
+body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15% -10%,rgba(108,140,255,.12),transparent 60%),radial-gradient(800px 500px at 100% 110%,rgba(139,108,255,.10),transparent 60%),var(--bg-0)}
+.auth-glow{position:fixed;inset:0;pointer-events:none;background:radial-gradient(600px 300px at 50% 0%,rgba(108,140,255,.10),transparent 70%)}
+.auth-container{width:100%;max-width:420px;position:relative;z-index:1}
+.auth-card{padding:36px 32px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-center{justify-content:center;margin-bottom:28px}
+.brand-mark{width:42px;height:42px;border-radius:12px;background:var(--accent-grad);display:grid;place-items:center;font-weight:800;font-size:20px;color:#fff;box-shadow:0 8px 20px -6px rgba(108,140,255,.6)}
+.brand-text{display:flex;flex-direction:column;line-height:1.15}
+.brand-name{font-weight:800;font-size:17px;letter-spacing:.5px}
+.brand-sub{font-size:11px;color:var(--text-dim);letter-spacing:.3px}
+.auth-title{font-size:22px;font-weight:700;text-align:center;margin-bottom:6px}
+.auth-subtitle{text-align:center;color:var(--text-dim);font-size:13px;margin-bottom:26px}
+.auth-form{display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:500;color:var(--text-dim);letter-spacing:.2px}
+.field input,.field select,.field textarea,.select{width:100%;padding:11px 14px;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;transition:border-color .18s,box-shadow .18s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus,.select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(108,140,255,.15)}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-mute)}
+.field textarea{resize:vertical;min-height:60px}
+.input-group{position:relative}
+.input-group input{padding-right:42px}
+.toggle-password{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;color:var(--text-dim);border-radius:8px}
+.toggle-password:hover{color:var(--text);background:var(--hover-bg-2)}
+.auth-foot{text-align:center;color:var(--text-mute);font-size:11.5px;margin-top:22px}
+.login-theme-toggle{position:fixed;top:20px;right:20px;z-index:10;width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--text);backdrop-filter:blur(14px);cursor:pointer;transition:transform .2s}
+.login-theme-toggle:hover{transform:scale(1.08)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;transition:transform .12s,opacity .18s;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-block{width:100%}
+.btn-primary{background:var(--accent-grad);color:#fff;box-shadow:0 8px 22px -10px rgba(108,140,255,.8)}
+.btn-primary:hover{opacity:.92}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed}
+.btn-ghost{background:var(--hover-bg);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--hover-bg-2)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-sm{padding:6px 10px;font-size:12px;border-radius:8px}
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;color:var(--text-dim);transition:background .18s,color .18s}
+.icon-btn:hover{background:var(--hover-bg-2);color:var(--text)}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.alert{padding:10px 12px;border-radius:var(--radius-sm);font-size:12.5px;line-height:1.45;border:1px solid transparent}
+.alert-error{background:rgba(255,93,108,.1);border-color:rgba(255,93,108,.35);color:#ff5d6c}
+.alert-info{background:rgba(79,180,255,.08);border-color:rgba(79,180,255,.25);color:#2d7fbf}
+.alert-success{background:rgba(46,204,143,.1);border-color:rgba(46,204,143,.3);color:#1f9d6c}
+.app-body{display:flex;min-height:100vh;background:var(--bg-0);transition:background .3s}
+.sidebar{width:250px;flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;z-index:40;transition:transform .25s,background .3s}
+.sidebar .brand{padding:0 6px 22px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.nav{display:flex;flex-direction:column;gap:3px;flex:1;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;color:var(--text-dim);font-size:13.5px;font-weight:500;text-align:left;transition:background .15s,color .15s}
+.nav-item:hover{background:var(--hover-bg);color:var(--text)}
+.nav-item.active{background:rgba(108,140,255,.12);color:var(--text)}
+.nav-item.active svg{color:var(--accent)}
+.nav-badge{margin-left:auto;background:var(--danger);color:#fff;font-size:10px;padding:2px 7px;border-radius:100px;font-weight:700}
+.sidebar-footer{border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.user-chip{display:flex;align-items:center;gap:10px;padding:4px 4px 8px}
+.avatar{width:36px;height:36px;border-radius:10px;background:var(--accent-grad);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex-shrink:0}
+.avatar-lg{width:56px;height:56px;border-radius:14px;font-size:22px}
+.user-meta{display:flex;flex-direction:column;line-height:1.25;overflow:hidden}
+.user-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:11px;color:var(--text-dim)}
+.sidebar-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35;opacity:0;pointer-events:none;transition:opacity .25s}
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;padding:16px 26px;background:var(--topbar-bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:background .3s}
+.page-title{font-size:18px;font-weight:700;flex:1}
+.topbar-actions{display:flex;gap:10px;align-items:center}
+.content{padding:24px 26px 48px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:22px}
+.stat-card{padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+.stat-label{font-size:12px;color:var(--text-dim);letter-spacing:.2px}
+.stat-value{font-size:24px;font-weight:700;letter-spacing:-.3px}
+.panel{padding:20px;margin-bottom:20px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.panel-head h2{font-size:15.5px;font-weight:600}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters .select{width:auto;padding:8px 12px;font-size:12.5px}
+.table-wrap{overflow-x:auto;margin:0 -20px;padding:0 20px}
+.data-table{width:100%;border-collapse:collapse;min-width:640px}
+.data-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-mute);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);white-space:nowrap}
+.data-table td{padding:12px;font-size:13px;border-bottom:1px solid var(--table-border);white-space:nowrap}
+.data-table tbody tr{transition:background .15s}
+.data-table tbody tr:hover{background:var(--table-hover)}
+.data-table .empty{text-align:center;color:var(--text-mute);padding:34px 12px}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.2px;border:1px solid transparent}
+.badge-active,.badge-completed,.badge-approved,.badge-paid{background:rgba(46,204,143,.12);color:#1f9d6c;border-color:rgba(46,204,143,.3)}
+.badge-inactive{background:rgba(138,147,168,.12);color:#64748b;border-color:rgba(138,147,168,.3)}
+.badge-pending{background:rgba(245,166,35,.12);color:#c47f00;border-color:rgba(245,166,35,.3)}
+.badge-failed,.badge-cancelled,.badge-rejected{background:rgba(255,93,108,.12);color:#c92a3a;border-color:rgba(255,93,108,.3)}
+.badge-payin{background:rgba(79,180,255,.12);color:#2d7fbf;border-color:rgba(79,180,255,.3)}
+.badge-payout{background:rgba(139,108,255,.12);color:#6b4fd1;border-color:rgba(139,108,255,.3)}
+.badge-bank{background:rgba(108,140,255,.12);color:#4864d4;border-color:rgba(108,140,255,.3)}
+.badge-upi{background:rgba(46,204,143,.12);color:#1f9d6c;border-color:rgba(46,204,143,.3)}
+.modal-backdrop{position:fixed;inset:0;z-index:100;background:var(--modal-bg);backdrop-filter:blur(6px);display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-backdrop:not(.hidden){opacity:1;pointer-events:auto}
+.modal{width:100%;max-width:460px;padding:0;max-height:90vh;overflow-y:auto}
+.modal-sm{max-width:380px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:15px;font-weight:600}
+.modal-body{padding:20px;display:flex;flex-direction:column;gap:14px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:6px}
+.profile-panel{padding:26px}
+.profile-head{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.profile-head h2{font-size:19px;font-weight:700}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.profile-grid>div{display:flex;flex-direction:column;gap:5px}
+.profile-grid strong{font-size:14px;font-weight:600}
+.toast-stack{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:10px;max-width:calc(100vw - 44px)}
+.toast{padding:12px 16px;border-radius:var(--radius-sm);background:var(--surface-2);border:1px solid var(--border-strong);backdrop-filter:blur(14px);font-size:13px;min-width:220px;box-shadow:var(--shadow);animation:toastIn .25s;color:var(--text)}
+.toast-error{border-color:rgba(255,93,108,.4)}
+.toast-success{border-color:rgba(46,204,143,.4)}
+@keyframes toastIn{from{transform:translateY(10px);opacity:0}}
+.only-mobile{display:none}
+@media (max-width:900px){
+  .only-mobile{display:grid}
+  .sidebar{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-backdrop.show{opacity:1;pointer-events:auto}
+  .content{padding:18px 16px 40px}
+  .topbar{padding:14px 16px}
+  .stats-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .stat-value{font-size:20px}
+  .table-wrap{margin:0 -16px;padding:0 16px}
+  .toast-stack{bottom:14px;right:14px;left:14px}
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- LOGIN THEME TOGGLE -->
+<button class="login-theme-toggle hidden" id="loginThemeToggle" title="Toggle theme">
+  <svg id="loginThemeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+
+<!-- LOGIN VIEW -->
+<div id="app-login" class="auth-body">
+  <div class="auth-glow"></div>
+  <main class="auth-container">
+    <div class="auth-card glass">
+      <div class="brand brand-center">
+        <div class="brand-mark">P</div>
+        <div class="brand-text">
+          <span class="brand-name">PAYVORA</span>
+          <span class="brand-sub">Agent Commission System</span>
+        </div>
+      </div>
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in with your Agent ID or Email</p>
+      <form id="loginForm" class="auth-form" novalidate>
+        <div class="field">
+          <label for="identifier">Agent ID / Email</label>
+          <input type="text" id="identifier" placeholder="PV001 or you@email.com" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required />
+            <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+        <div id="loginError" class="alert alert-error hidden" role="alert"></div>
+        <button type="submit" id="loginBtn" class="btn btn-primary btn-block">
+          <span class="btn-label">Sign In</span>
+          <span class="spinner hidden"></span>
+        </button>
+      </form>
+      <p class="auth-foot">Secure access · Firebase Authentication</p>
+    </div>
+  </main>
+</div>
+<!-- ===================================================== -->
+<!--                    ADMIN VIEW                          -->
+<!-- ===================================================== -->
+<div id="app-admin" class="app-body hidden">
+  <aside class="sidebar" id="adminSidebar">
+    <div class="brand">
+      <div class="brand-mark">P</div>
+      <div class="brand-text">
+        <span class="brand-name">PAYVORA</span>
+        <span class="brand-sub">Admin Console</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="dashboard" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-view="agents" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Agents
+      </button>
+      <button class="nav-item" data-view="transactions" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Transactions
+      </button>
+      <button class="nav-item" data-view="payouts" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        Payout Requests
+        <span class="nav-badge hidden" id="adminPayoutBadge">0</span>
+      </button>
+      <button class="nav-item" data-view="commissions" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        Commissions
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar" id="adminAvatar">A</div>
+        <div class="user-meta">
+          <span class="user-name" id="adminName">Admin</span>
+          <span class="user-role">Administrator</span>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-block" id="adminThemeToggle" style="justify-content:flex-start;gap:10px;">
+        <svg id="adminThemeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span>Light Mode</span>
+      </button>
+      <button class="btn btn-ghost btn-block" id="adminLogoutBtn">Logout</button>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="adminBackdrop"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn only-mobile" data-menu="admin" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="page-title" id="adminPageTitle">Dashboard</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" id="openTxModalBtn">+ New Transaction</button>
+      </div>
+    </header>
+
+    <section class="content">
+      <!-- ADMIN DASHBOARD -->
+      <div class="view" id="admin-view-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card glass"><span class="stat-label">Total Agents</span><span class="stat-value" data-stat="totalAgents">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Active Agents</span><span class="stat-value" data-stat="activeAgents">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Transaction Volume</span><span class="stat-value" data-stat="totalVolume">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Total Commission</span><span class="stat-value" data-stat="totalCommission">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Pending Commission</span><span class="stat-value" data-stat="pendingCommission">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Paid Commission</span><span class="stat-value" data-stat="paidCommission">—</span></div>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h2>Recent Transactions</h2></div>
+          <div class="table-wrap">
+            <table class="data-table" id="adminRecentTxTable">
+              <thead><tr><th>Tx ID</th><th>Agent</th><th>Type</th><th>Amount</th><th>Commission</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN AGENTS -->
+      <div class="view hidden" id="admin-view-agents">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>Agents</h2>
+            <button class="btn btn-primary" id="openAgentModalBtn">+ Create Agent</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="agentsTable">
+              <thead><tr><th>Agent ID</th><th>Name</th><th>Email</th><th>Commission</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN TRANSACTIONS -->
+      <div class="view hidden" id="admin-view-transactions">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>All Transactions</h2>
+            <div class="filters">
+              <select id="txAgentFilter" class="select"><option value="">All Agents</option></select>
+              <select id="txStatusFilter" class="select">
+                <option value="">All Status</option>
+                <option>Pending</option><option>Completed</option><option>Failed</option><option>Cancelled</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="txTable">
+              <thead><tr><th>Tx ID</th><th>Agent</th><th>Type</th><th>Amount</th><th>Rate</th><th>Commission</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+              <tbody><tr><td colspan="9" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN PAYOUTS -->
+      <div class="view hidden" id="admin-view-payouts">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>Payout Requests</h2>
+            <div class="filters">
+              <select id="payoutStatusFilter" class="select">
+                <option value="">All Status</option>
+                <option>Pending</option><option>Approved</option><option>Rejected</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="payoutsTable">
+              <thead><tr><th>Date</th><th>Agent</th><th>Amount</th><th>Method</th><th>Details</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN COMMISSIONS -->
+      <div class="view hidden" id="admin-view-commissions">
+        <div class="panel glass">
+          <div class="panel-head"><h2>Agent-wise Commission Report</h2></div>
+          <div class="table-wrap">
+            <table class="data-table" id="commissionTable">
+              <thead><tr><th>Agent ID</th><th>Name</th><th>Rate</th><th>Tx Count</th><th>Total Volume</th><th>Total Commission</th><th>Pending</th><th>Paid</th><th>Action</th></tr></thead>
+              <tbody><tr><td colspan="9" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!--                    AGENT VIEW                          -->
+<!-- ===================================================== -->
+<div id="app-agent" class="app-body hidden">
+  <aside class="sidebar" id="agentSidebar">
+    <div class="brand">
+      <div class="brand-mark">P</div>
+      <div class="brand-text">
+        <span class="brand-name">PAYVORA</span>
+        <span class="brand-sub">Agent Portal</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="dashboard" data-app="agent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-view="transactions" data-app="agent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        My Transactions
+      </button>
+      <button class="nav-item" data-view="payouts" data-app="agent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        My Payouts
+      </button>
+      <button class="nav-item" data-view="profile" data-app="agent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
+        Profile
+      </button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar" id="agentAvatar">A</div>
+        <div class="user-meta">
+          <span class="user-name" id="agentName">Agent</span>
+          <span class="user-role" id="agentIdLabel">—</span>
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-block" id="agentThemeToggle" style="justify-content:flex-start;gap:10px;">
+        <svg id="agentThemeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span>Light Mode</span>
+      </button>
+      <button class="btn btn-ghost btn-block" id="agentLogoutBtn">Logout</button>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="agentBackdrop"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn only-mobile" data-menu="agent" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="page-title" id="agentPageTitle">Dashboard</h1>
+    </header>
+
+    <section class="content">
+      <div class="view" id="agent-view-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card glass" style="grid-column:1/-1;background:linear-gradient(135deg,#6c8cff 0%,#8b6cff 100%);border:none;color:#fff;">
+            <span class="stat-label" style="color:rgba(255,255,255,.85);">Available Balance (for Payout)</span>
+            <span class="stat-value" style="color:#fff;" data-astat="availableBalance">—</span>
+            <button class="btn" id="requestPayoutBtn" style="align-self:flex-start;margin-top:8px;background:#fff;color:#6c8cff;font-weight:700;">📤 Request Payout</button>
+          </div>
+          <div class="stat-card glass"><span class="stat-label">Total Volume</span><span class="stat-value" data-astat="totalVolume">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Total Commission</span><span class="stat-value" data-astat="totalCommission">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Pending Commission</span><span class="stat-value" data-astat="pendingCommission">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Paid Commission</span><span class="stat-value" data-astat="paidCommission">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Transactions</span><span class="stat-value" data-astat="txCount">—</span></div>
+        </div>
+        <div class="panel glass">
+          <div class="panel-head"><h2>Recent Transactions</h2></div>
+          <div class="table-wrap">
+            <table class="data-table" id="agentRecentTxTable">
+              <thead><tr><th>Tx ID</th><th>Date</th><th>Type</th><th>Amount</th><th>Rate</th><th>Commission</th><th>Status</th></tr></thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" id="agent-view-transactions">
+        <div class="panel glass">
+          <div class="panel-head"><h2>My Transactions</h2></div>
+          <div class="table-wrap">
+            <table class="data-table" id="agentTxTable">
+              <thead><tr><th>Tx ID</th><th>Date</th><th>Type</th><th>Amount</th><th>Rate</th><th>Commission</th><th>Status</th></tr></thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" id="agent-view-payouts">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>My Payout Requests</h2>
+            <button class="btn btn-primary" id="requestPayoutBtn2">+ New Request</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="agentPayoutsTable">
+              <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Details</th><th>Status</th></tr></thead>
+              <tbody><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" id="agent-view-profile">
+        <div class="panel glass profile-panel">
+          <div class="profile-head">
+            <div class="avatar avatar-lg" id="profileAvatar">A</div>
+            <div>
+              <h2 id="profileName">—</h2>
+              <p class="muted" id="profileEmail">—</p>
+            </div>
+          </div>
+          <div class="profile-grid">
+            <div><span class="muted">Agent ID</span><strong id="profileAgentId">—</strong></div>
+            <div><span class="muted">Commission Rate</span><strong id="profileRate">—</strong></div>
+            <div><span class="muted">Status</span><strong id="profileStatus">—</strong></div>
+            <div><span class="muted">Member Since</span><strong id="profileCreated">—</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- ===================================================== -->
+<!--                    MODALS                              -->
+<!-- ===================================================== -->
+
+<!-- AGENT MODAL -->
+<div class="modal-backdrop hidden" id="agentModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3 id="agentModalTitle">Create Agent</h3>
+      <button class="icon-btn" data-close="agentModal">✕</button>
+    </div>
+    <form id="agentForm" class="modal-body">
+      <input type="hidden" id="agentEditKey" />
+      <div class="field"><label>Agent ID</label><input type="text" id="agentIdInput" placeholder="PV001" required /></div>
+      <div class="field"><label>Full Name</label><input type="text" id="agentNameInput" placeholder="Test Agent" required /></div>
+      <div class="field"><label>Email</label><input type="email" id="agentEmailInput" placeholder="agent@payvora.com" required /></div>
+      <div class="field" id="agentPasswordField"><label>Password</label><input type="password" id="agentPasswordInput" placeholder="Min 6 characters" /></div>
+      <div class="field"><label>Commission %</label><input type="number" id="agentCommissionInput" step="0.01" min="0" max="100" value="2" required /></div>
+      <div class="field"><label>Status</label>
+        <select id="agentStatusInput" class="select"><option value="active">Active</option><option value="inactive">Inactive</option></select>
+      </div>
+      <div id="agentFormError" class="alert alert-error hidden"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="agentModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="agentSubmitBtn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- TRANSACTION MODAL -->
+<div class="modal-backdrop hidden" id="txModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3 id="txModalTitle">New Transaction</h3>
+      <button class="icon-btn" data-close="txModal">✕</button>
+    </div>
+    <form id="txForm" class="modal-body">
+      <input type="hidden" id="txEditId" />
+      <div class="field"><label>Agent</label><select id="txAgentInput" class="select" required></select></div>
+      <div class="field"><label>Amount (₹)</label><input type="number" id="txAmountInput" step="0.01" min="0.01" placeholder="100000" required /></div>
+      <div class="field"><label>Type</label>
+        <select id="txTypeInput" class="select" required><option value="PAYIN">PAYIN</option><option value="PAYOUT">PAYOUT</option></select>
+      </div>
+      <div class="field"><label>Commission % (override)</label><input type="number" id="txRateInput" step="0.01" min="0" max="100" placeholder="Leave blank to use agent rate" /></div>
+      <div class="field"><label>Status</label>
+        <select id="txStatusInput" class="select"><option>Pending</option><option>Completed</option><option>Failed</option><option>Cancelled</option></select>
+      </div>
+      <div class="alert alert-info" id="txPreview">Commission preview: —</div>
+      <div id="txFormError" class="alert alert-error hidden"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="txModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="txSubmitBtn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- COMMISSION MODAL -->
+<div class="modal-backdrop hidden" id="commModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3>Update Commission — <span id="commAgentId"></span></h3>
+      <button class="icon-btn" data-close="commModal">✕</button>
+    </div>
+    <form id="commForm" class="modal-body">
+      <p class="muted">Current: <strong id="commCurrent">—</strong></p>
+      <div class="field"><label>New Commission %</label><input type="number" id="commNewInput" step="0.01" min="0" max="100" required /></div>
+      <div id="commFormError" class="alert alert-error hidden"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="commModal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Commission</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- PAYOUT REQUEST MODAL -->
+<div class="modal-backdrop hidden" id="payoutModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3>Request Payout</h3>
+      <button class="icon-btn" data-close="payoutModal">✕</button>
+    </div>
+    <form id="payoutForm" class="modal-body">
+      <div class="alert alert-info">Available Balance: <strong id="payoutAvailBal">—</strong></div>
+      <div class="field"><label>Amount (₹)</label><input type="number" id="payoutAmountInput" step="0.01" min="1" placeholder="5000" required /></div>
+      <div class="field"><label>Payout Method</label>
+        <select id="payoutMethodInput" class="select" required>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="UPI">UPI</option>
+        </select>
+      </div>
+      <div id="bankFields">
+        <div class="field"><label>Account Holder Name</label><input type="text" id="payoutAccName" placeholder="Full name" /></div>
+        <div class="field"><label>Account Number</label><input type="text" id="payoutAccNo" placeholder="1234567890" /></div>
+        <div class="field"><label>IFSC Code</label><input type="text" id="payoutIfsc" placeholder="HDFC0001234" /></div>
+        <div class="field"><label>Bank Name</label><input type="text" id="payoutBankName" placeholder="HDFC Bank" /></div>
+      </div>
+      <div id="upiFields" class="hidden">
+        <div class="field"><label>UPI ID</label><input type="text" id="payoutUpiId" placeholder="yourname@upi" /></div>
+        <div class="field"><label>UPI Holder Name</label><input type="text" id="payoutUpiName" placeholder="Full name" /></div>
+      </div>
+      <div id="payoutFormError" class="alert alert-error hidden"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="payoutModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="payoutSubmitBtn">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- PAYOUT VIEW MODAL -->
+<div class="modal-backdrop hidden" id="payoutViewModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3>Payout Request Details</h3>
+      <button class="icon-btn" data-close="payoutViewModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="payoutViewContent"></div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="payoutRejectBtn">Reject</button>
+        <button class="btn btn-success" id="payoutApproveBtn">Approve & Mark Paid</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-backdrop hidden" id="confirmModal">
+  <div class="modal glass modal-sm">
+    <div class="modal-head"><h3 id="confirmTitle">Confirm</h3></div>
+    <div class="modal-body">
+      <p id="confirmMessage" class="muted"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close="confirmModal">Cancel</button>
+        <button class="btn btn-danger" id="confirmOkBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST STACK -->
+<div class="toast-stack" id="toastStack"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, get, set, update, push, onValue, query, orderByChild, equalTo }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { initializeApp as initSecondaryApp, deleteApp as deleteSecondaryApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth as getSecondaryAuth, createUserWithEmailAndPassword as createSecondaryUser }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCplnWHggabghQot4H3dO82VJAI8MWqtKc",
+  authDomain: "payvoraa.firebaseapp.com",
+  databaseURL: "https://payvoraa-default-rtdb.firebaseio.com",
+  projectId: "payvoraa",
+  storageBucket: "payvoraa.firebasestorage.app",
+  messagingSenderId: "1026561339309",
+  appId: "1:1026561339309:web:304c0947bd3d7a4de87b24",
+  measurementId: "G-5HT7M759WQ"
+};
+
+const app = initializeApp(firebaseConfig);
+try { getAnalytics(app); } catch(_) {}
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const $ = (id) => document.getElementById(id);
+const show = (el) => el && el.classList.remove("hidden");
+const hide = (el) => el && el.classList.add("hidden");
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const fmtMoney = (n) => "₹" + Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtNum = (n) => Number(n || 0).toLocaleString("en-IN");
+const fmtDate = (ts) => ts ? new Date(ts).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) : "—";
+
+function toast(msg, type = "info") {
+  const stack = $("toastStack");
+  const el = document.createElement("div");
+  el.className = `toast toast-${type}`;
+  el.textContent = msg;
+  stack.appendChild(el);
+  setTimeout(() => el.remove(), 3600);
+}
+
+function friendly(err) {
+  if (!err) return "Something went wrong.";
+  const code = err.code || "";
+  const map = {
+    "auth/email-already-in-use": "This email is already registered.",
+    "auth/invalid-email": "Invalid email address.",
+    "auth/weak-password": "Password is too weak (min 6 chars).",
+    "auth/invalid-credential": "Invalid credentials.",
+    "auth/wrong-password": "Incorrect password.",
+    "auth/user-not-found": "No account found.",
+    "auth/user-disabled": "Account disabled.",
+    "auth/too-many-requests": "Too many attempts. Try later.",
+    "auth/network-request-failed": "Network error.",
+    "PERMISSION_DENIED": "Permission denied by rules."
+  };
+  return map[code] || err.message || "Something went wrong.";
+}
+
+function openModal(id){ show($(id)); }
+function closeModal(id){ hide($(id)); }
+document.querySelectorAll("[data-close]").forEach(b => {
+  b.addEventListener("click", () => closeModal(b.dataset.close));
+});
+document.querySelectorAll(".modal-backdrop").forEach(bd => {
+  bd.addEventListener("click", (e) => { if (e.target === bd) bd.classList.add("hidden"); });
+});
+
+let confirmResolve = null;
+function confirmDialog(title, msg){
+  $("confirmTitle").textContent = title;
+  $("confirmMessage").textContent = msg;
+  openModal("confirmModal");
+  return new Promise(res => { confirmResolve = res; });
+}
+$("confirmOkBtn").addEventListener("click", () => {
+  closeModal("confirmModal");
+  if (confirmResolve) { confirmResolve(true); confirmResolve = null; }
+});
+
+function initTheme() {
+  const saved = localStorage.getItem("payvora-theme") || "dark";
+  document.body.setAttribute("data-theme", saved);
+  updateThemeIcons(saved);
+}
+function toggleTheme() {
+  const cur = document.body.getAttribute("data-theme") || "dark";
+  const next = cur === "dark" ? "light" : "dark";
+  document.body.setAttribute("data-theme", next);
+  localStorage.setItem("payvora-theme", next);
+  updateThemeIcons(next);
+}
+function updateThemeIcons(theme) {
+  const sunSvg = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  const moonSvg = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  const icon = theme === "dark" ? sunSvg : moonSvg;
+  ["loginThemeIcon","adminThemeIcon","agentThemeIcon"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = icon;
+  });
+  const label = theme === "dark" ? "Light Mode" : "Dark Mode";
+  document.querySelectorAll("#adminThemeToggle span, #agentThemeToggle span").forEach(span => {
+    span.textContent = label;
+  });
+}
+initTheme();
+
+function showLogin(){ show($("app-login")); hide($("app-admin")); hide($("app-agent")); hide($("loginThemeToggle")); }
+function showAdmin(){ hide($("app-login")); show($("app-admin")); hide($("app-agent")); }
+function showAgent(){ hide($("app-login")); hide($("app-admin")); show($("app-agent")); }
+
+let currentUser = null;
+let currentProfile = null;
+
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  currentProfile = null;
+
+  if (!user) {
+    showLogin();
+    show($("loginThemeToggle"));
+    return;
+  }
+
+  try {
+    const snap = await get(ref(db, `users/${user.uid}`));
+    if (!snap.exists()) {
+      await signOut(auth);
+      showLogin();
+      return;
+    }
+    currentProfile = snap.val();
+
+    if (currentProfile.role === "admin") {
+      showAdmin();
+      initAdmin(currentProfile);
+    } else if (currentProfile.role === "agent") {
+      if (currentProfile.status && currentProfile.status !== "active") {
+        await signOut(auth);
+        showLogin();
+        showLoginError("Your account has been disabled.");
+        return;
+      }
+      showAgent();
+      initAgent(currentProfile);
+    } else {
+      await signOut(auth);
+      showLogin();
+    }
+  } catch (e) {
+    console.error("Profile load error:", e);
+    await signOut(auth);
+    showLogin();
+  }
+});
+
+function showLoginError(msg){
+  const el = $("loginError");
+  el.textContent = msg;
+  show(el);
+}
+function clearLoginError(){ hide($("loginError")); }
+
+function setLoginLoading(on){
+  const btn = $("loginBtn");
+  btn.disabled = on;
+  btn.querySelector(".btn-label").textContent = on ? "Signing in…" : "Sign In";
+  btn.querySelector(".spinner").classList.toggle("hidden", !on);
+}
+
+$("togglePassword").addEventListener("click", () => {
+  const p = $("password");
+  p.type = p.type === "password" ? "text" : "password";
+});
+
+$("loginThemeToggle").addEventListener("click", toggleTheme);
+$("adminThemeToggle").addEventListener("click", toggleTheme);
+$("agentThemeToggle").addEventListener("click", toggleTheme);
+
+async function resolveEmail(identifier){
+  const id = identifier.trim();
+  if (id.includes("@")) return id;
+  const snap = await get(query(ref(db, "agents"), orderByChild("agentId"), equalTo(id)));
+  if (!snap.exists()) throw new Error("agent-not-found");
+  const first = Object.values(snap.val())[0];
+  if (!first?.email) throw new Error("agent-not-found");
+  return first.email;
+}
+
+$("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  clearLoginError();
+  const identifier = $("identifier").value.trim();
+  const password = $("password").value;
+  if (!identifier || !password){ showLoginError("Please enter both fields."); return; }
+
+  setLoginLoading(true);
+  try {
+    let email;
+    try { email = await resolveEmail(identifier); }
+    catch (err) {
+      if (err.message === "agent-not-found") email = identifier;
+      else throw err;
+    }
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.error(err);
+    if (err.message === "account-disabled") showLoginError("Your account has been disabled.");
+    else showLoginError(friendly(err));
+  } finally {
+    setLoginLoading(false);
+  }
+});
+
+async function doLogout(){
+  try { await signOut(auth); } catch(_) {}
+  showLogin();
+  show($("loginThemeToggle"));
+  $("identifier").value = "";
+  $("password").value = "";
+  clearLoginError();
+}
+$("adminLogoutBtn").addEventListener("click", doLogout);
+$("agentLogoutBtn").addEventListener("click", doLogout);
+
+document.querySelectorAll("[data-menu]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const which = btn.dataset.menu;
+    const sidebar = which === "admin" ? $("adminSidebar") : $("agentSidebar");
+    const backdrop = which === "admin" ? $("adminBackdrop") : $("agentBackdrop");
+    sidebar.classList.add("open"); backdrop.classList.add("show");
+  });
+});
+["adminBackdrop","agentBackdrop"].forEach(id => {
+  $(id).addEventListener("click", () => {
+    $(id === "adminBackdrop" ? "adminSidebar" : "agentSidebar").classList.remove("open");
+    $(id).classList.remove("show");
+  });
+});
+
+document.querySelectorAll(".nav-item").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const appName = btn.dataset.app;
+    const viewName = btn.dataset.view;
+    const navScope = btn.closest(".nav");
+    navScope.querySelectorAll(".nav-item").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    document.querySelectorAll(`#app-${appName} .view`).forEach(v => v.classList.add("hidden"));
+    const target = document.getElementById(`${appName}-view-${viewName}`);
+    if (target) target.classList.remove("hidden");
+
+    const titles = {
+      dashboard: "Dashboard", agents: "Agents", transactions: "Transactions",
+      commissions: "Commissions", payouts: "Payout Requests", profile: "Profile"
+    };
+    $(appName === "admin" ? "adminPageTitle" : "agentPageTitle").textContent = titles[viewName] || "Dashboard";
+
+    const sidebar = appName === "admin" ? $("adminSidebar") : $("agentSidebar");
+    const backdrop = appName === "admin" ? $("adminBackdrop") : $("agentBackdrop");
+    sidebar.classList.remove("open");
+    backdrop.classList.remove("show");
+  });
+});
+
+let adminState = {
+  agents: {},
+  transactions: {},
+  unsubAgents: null,
+  unsubTx: null,
+  initialized: false
+};
+
+function initAdmin(profile){
+  if (!profile || profile.role !== "admin") return;
+
+  $("adminName").textContent = profile.name || "Admin";
+  $("adminAvatar").textContent = (profile.name || "A").charAt(0).toUpperCase();
+
+  if (adminState.initialized) return;
+  adminState.initialized = true;
+
+  adminState.unsubAgents = onValue(ref(db, "agents"), (snap) => {
+    adminState.agents = snap.val() || {};
+    renderAdminStats();
+    renderAgentsTable();
+    renderRecentAdminTx();
+    renderCommissionTable();
+    populateAgentFilters();
+  }, (err) => {
+    console.error("agents read error", err);
+    toast("Failed to load agents: " + friendly(err), "error");
+  });
+
+  adminState.unsubTx = onValue(ref(db, "transactions"), (snap) => {
+    adminState.transactions = snap.val() || {};
+    renderAdminStats();
+    renderAdminTxTable();
+    renderRecentAdminTx();
+    renderCommissionTable();
+  }, (err) => {
+    console.error("tx read error", err);
+    toast("Failed to load transactions: " + friendly(err), "error");
+  });
+
+  $("openAgentModalBtn").addEventListener("click", () => openAgentModal());
+  $("openTxModalBtn").addEventListener("click", () => openTxModal());
+  $("txAgentFilter").addEventListener("change", renderAdminTxTable);
+  $("txStatusFilter").addEventListener("change", renderAdminTxTable);
+  $("commForm").addEventListener("submit", onCommissionSubmit);
+  $("agentForm").addEventListener("submit", onAgentSubmit);
+  $("txForm").addEventListener("submit", onTxSubmit);
+
+  ["txAmountInput","txRateInput","txAgentInput"].forEach(id => {
+    $(id).addEventListener("input", updateTxPreview);
+    $(id).addEventListener("change", updateTxPreview);
+  });
+
+  initAdminPayoutsSubscription();
+}
+
+function renderAdminStats(){
+  const agents = Object.values(adminState.agents);
+  const txs = Object.values(adminState.transactions);
+  let volume = 0, commission = 0, pending = 0, paid = 0;
+  txs.forEach(tx => {
+    const amt = Number(tx.amount) || 0;
+    const comm = Number(tx.commissionAmount) || 0;
+    volume += amt;
+    commission += comm;
+    if (tx.status === "Pending") pending += comm;
+    if (tx.status === "Completed") paid += comm;
+  });
+  document.querySelector('[data-stat="totalAgents"]').textContent = fmtNum(agents.length);
+  document.querySelector('[data-stat="activeAgents"]').textContent = fmtNum(agents.filter(a => a.status === "active").length);
+  document.querySelector('[data-stat="totalVolume"]').textContent = fmtMoney(volume);
+  document.querySelector('[data-stat="totalCommission"]').textContent = fmtMoney(commission);
+  document.querySelector('[data-stat="pendingCommission"]').textContent = fmtMoney(pending);
+  document.querySelector('[data-stat="paidCommission"]').textContent = fmtMoney(paid);
+}
+
+function renderAgentsTable(){
+  const tbody = $("agentsTable").querySelector("tbody");
+  const entries = Object.entries(adminState.agents);
+  if (!entries.length){
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">No agents yet. Click "+ Create Agent".</td></tr>`;
+    return;
+  }
+  entries.sort((a,b) => (a[1].agentId || "").localeCompare(b[1].agentId || ""));
+  tbody.innerHTML = entries.map(([key, a]) => `
+    <tr>
+      <td><strong>${esc(a.agentId)}</strong></td>
+      <td>${esc(a.name)}</td>
+      <td>${esc(a.email || "—")}</td>
+      <td>${Number(a.commissionRate || 0).toFixed(2)}%</td>
+      <td><span class="badge badge-${a.status === "active" ? "active" : "inactive"}">${esc(a.status)}</span></td>
+      <td>${fmtDate(a.createdAt)}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm" data-act="edit" data-key="${esc(key)}">Edit</button>
+          <button class="btn btn-ghost btn-sm" data-act="comm" data-key="${esc(key)}">Commission</button>
+          <button class="btn btn-ghost btn-sm" data-act="toggle" data-key="${esc(key)}">
+            ${a.status === "active" ? "Deactivate" : "Activate"}
+          </button>
+          <button class="btn btn-ghost btn-sm" data-act="view-tx" data-key="${esc(key)}">Tx</button>
+        </div>
+      </td>
+    </tr>`).join("");
+  tbody.querySelectorAll("[data-act]").forEach(btn => {
+    btn.addEventListener("click", () => handleAgentAction(btn.dataset.act, btn.dataset.key));
+  });
+}
+
+async function handleAgentAction(act, key){
+  const a = adminState.agents[key];
+  if (!a) return;
+  if (act === "edit") {
+    openAgentModal(a, key);
+  } else if (act === "comm") {
+    $("commAgentId").textContent = a.agentId;
+    $("commCurrent").textContent = Number(a.commissionRate || 0).toFixed(2) + "%";
+    $("commNewInput").value = Number(a.commissionRate || 0).toFixed(2);
+    hide($("commFormError"));
+    $("commForm").dataset.key = key;
+    openModal("commModal");
+  } else if (act === "toggle") {
+    const newStatus = a.status === "active" ? "inactive" : "active";
+    const ok = await confirmDialog("Change Status", `Set ${a.agentId} to "${newStatus}"?`);
+    if (!ok) return;
+    try {
+      await update(ref(db, `agents/${key}`), { status: newStatus });
+      if (a.uid) await update(ref(db, `users/${a.uid}`), { status: newStatus });
+      toast(`Agent ${a.agentId} → ${newStatus}`, "success");
+    } catch(err){ toast("Update failed: " + friendly(err), "error"); }
+  } else if (act === "view-tx") {
+    document.querySelector('[data-app="admin"][data-view="transactions"]').click();
+    $("txAgentFilter").value = a.agentId;
+    renderAdminTxTable();
+  }
+}
+
+function openAgentModal(agent = null, key = null){
+  $("agentModalTitle").textContent = agent ? "Edit Agent" : "Create Agent";
+  $("agentEditKey").value = key || "";
+  $("agentIdInput").value = agent?.agentId || "";
+  $("agentIdInput").disabled = !!agent;
+  $("agentNameInput").value = agent?.name || "";
+  $("agentEmailInput").value = agent?.email || "";
+  $("agentEmailInput").disabled = !!agent;
+  $("agentPasswordInput").value = "";
+  $("agentPasswordField").classList.toggle("hidden", !!agent);
+  $("agentCommissionInput").value = agent ? Number(agent.commissionRate).toFixed(2) : "2";
+  $("agentStatusInput").value = agent?.status || "active";
+  hide($("agentFormError"));
+  openModal("agentModal");
+}
+
+async function createAgentUserSecondary(email, password){
+  const name = "payvora-secondary-" + Date.now();
+  const sApp = initSecondaryApp(firebaseConfig, name);
+  const sAuth = getSecondaryAuth(sApp);
+  try {
+    const cred = await createSecondaryUser(sAuth, email, password);
+    const uid = cred.user.uid;
+    await deleteSecondaryApp(sApp);
+    return { uid };
+  } catch (e) {
+    try { await deleteSecondaryApp(sApp); } catch(_) {}
+    throw e;
+  }
+}
+
+async function onAgentSubmit(e){
+  e.preventDefault();
+  const errEl = $("agentFormError"); hide(errEl);
+  const editKey = $("agentEditKey").value;
+  const agentId = $("agentIdInput").value.trim();
+  const name = $("agentNameInput").value.trim();
+  const email = $("agentEmailInput").value.trim().toLowerCase();
+  const password = $("agentPasswordInput").value;
+  const commission = parseFloat($("agentCommissionInput").value);
+  const status = $("agentStatusInput").value;
+
+  if (!agentId || !name || !email){ errEl.textContent = "Please fill all required fields."; show(errEl); return; }
+  if (!/^[A-Za-z0-9_-]{2,20}$/.test(agentId)){ errEl.textContent = "Agent ID must be 2–20 chars."; show(errEl); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ errEl.textContent = "Invalid email."; show(errEl); return; }
+  if (!(commission >= 0 && commission <= 100)){ errEl.textContent = "Commission must be 0–100."; show(errEl); return; }
+
+  try {
+    if (!editKey) {
+      const dup = await get(query(ref(db, "agents"), orderByChild("agentId"), equalTo(agentId)));
+      if (dup.exists()){ errEl.textContent = `Agent ID "${agentId}" already exists.`; show(errEl); return; }
+      if (!password || password.length < 6){ errEl.textContent = "Password min 6 chars."; show(errEl); return; }
+
+      const { uid } = await createAgentUserSecondary(email, password);
+      await set(ref(db, `users/${uid}`), {
+        role: "agent", agentId, name, email, status,
+        commissionRate: commission, createdAt: Date.now()
+      });
+      await set(ref(db, `agents/${agentId}`), {
+        uid, agentId, name, email, status,
+        commissionRate: commission, createdAt: Date.now()
+      });
+      toast(`Agent ${agentId} created`, "success");
+      closeModal("agentModal");
+    } else {
+      const a = adminState.agents[editKey];
+      await update(ref(db, `agents/${editKey}`), { name, email, commissionRate: commission, status });
+      if (a?.uid) await update(ref(db, `users/${a.uid}`), { name, email, status, commissionRate: commission });
+      toast(`Agent ${agentId} updated`, "success");
+      closeModal("agentModal");
+    }
+  } catch(err){
+    console.error(err);
+    errEl.textContent = friendly(err);
+    show(errEl);
+  }
+}
+
+async function onCommissionSubmit(e){
+  e.preventDefault();
+  const errEl = $("commFormError"); hide(errEl);
+  const key = $("commForm").dataset.key;
+  const newRate = parseFloat($("commNewInput").value);
+  if (!(newRate >= 0 && newRate <= 100)){ errEl.textContent = "Commission 0–100."; show(errEl); return; }
+  try {
+    await update(ref(db, `agents/${key}`), { commissionRate: newRate });
+    const a = adminState.agents[key];
+    if (a?.uid) await update(ref(db, `users/${a.uid}`), { commissionRate: newRate });
+    toast("Commission updated.", "success");
+    closeModal("commModal");
+  } catch(err){
+    errEl.textContent = friendly(err); show(errEl);
+  }
+}
+
+function populateAgentFilters(){
+  const sel = $("txAgentFilter");
+  const current = sel.value;
+  const opts = ['<option value="">All Agents</option>'];
+  Object.values(adminState.agents)
+    .sort((a,b) => (a.agentId||"").localeCompare(b.agentId||""))
+    .forEach(a => {
+      opts.push(`<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)}</option>`);
+    });
+  sel.innerHTML = opts.join("");
+  if (current) sel.value = current;
+
+  const txSel = $("txAgentInput");
+  if (txSel) {
+    txSel.innerHTML = Object.values(adminState.agents)
+      .sort((a,b) => (a.agentId||"").localeCompare(b.agentId||""))
+      .map(a => `<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)} (${Number(a.commissionRate||0).toFixed(2)}%)</option>`)
+      .join("");
+  }
+}
+
+function renderAdminTxTable(){
+  const tbody = $("txTable").querySelector("tbody");
+  const agentFilter = $("txAgentFilter").value;
+  const statusFilter = $("txStatusFilter").value;
+  let list = Object.entries(adminState.transactions);
+  if (agentFilter) list = list.filter(([,t]) => t.agentId === agentFilter);
+  if (statusFilter) list = list.filter(([,t]) => t.status === statusFilter);
+  list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length){
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">No transactions found.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, t]) => `
+    <tr>
+      <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
+      <td>${esc(t.agentId)}</td>
+      <td><span class="badge badge-${t.type === "PAYIN" ? "payin" : "payout"}">${esc(t.type)}</span></td>
+      <td>${fmtMoney(t.amount)}</td>
+      <td>${Number(t.commissionRate||0).toFixed(2)}%</td>
+      <td>${fmtMoney(t.commissionAmount)}</td>
+      <td><span class="badge badge-${String(t.status||"").toLowerCase()}">${esc(t.status)}</span></td>
+      <td>${fmtDate(t.createdAt)}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm" data-txact="edit" data-id="${esc(id)}">Edit</button>
+          <button class="btn btn-ghost btn-sm" data-txact="cycle" data-id="${esc(id)}">Cycle</button>
+        </div>
+      </td>
+    </tr>`).join("");
+  tbody.querySelectorAll("[data-txact]").forEach(btn => {
+    btn.addEventListener("click", () => handleTxAction(btn.dataset.txact, btn.dataset.id));
+  });
+}
+
+function renderRecentAdminTx(){
+  const tbody = $("adminRecentTxTable").querySelector("tbody");
+  const list = Object.entries(adminState.transactions)
+    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0))
+    .slice(0, 8);
+  if (!list.length){
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, t]) => `
+    <tr>
+      <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
+      <td>${esc(t.agentId)}</td>
+      <td><span class="badge badge-${t.type === "PAYIN" ? "payin" : "payout"}">${esc(t.type)}</span></td>
+      <td>${fmtMoney(t.amount)}</td>
+      <td>${fmtMoney(t.commissionAmount)}</td>
+      <td><span class="badge badge-${String(t.status||"").toLowerCase()}">${esc(t.status)}</span></td>
+      <td>${fmtDate(t.createdAt)}</td>
+    </tr>`).join("");
+}
+
+async function handleTxAction(act, id){
+  const t = adminState.transactions[id];
+  if (!t) return;
+  if (act === "edit"){
+    openTxModal(id, t);
+  } else if (act === "cycle"){
+    const order = ["Pending","Completed","Failed","Cancelled"];
+    const idx = order.indexOf(t.status);
+    const next = order[(idx + 1) % order.length];
+    const ok = await confirmDialog("Change Status", `"${t.status}" → "${next}"?`);
+    if (!ok) return;
+    try {
+      await update(ref(db, `transactions/${id}`), { status: next, updatedAt: Date.now() });
+      toast("Status updated", "success");
+    } catch(err){ toast("Failed: " + friendly(err), "error"); }
+  }
+}
+
+function openTxModal(editId = null, tx = null){
+  $("txModalTitle").textContent = editId ? "Edit Transaction" : "New Transaction";
+  $("txEditId").value = editId || "";
+  hide($("txFormError"));
+  populateAgentFilters();
+  if (tx){
+    $("txAgentInput").value = tx.agentId;
+    $("txAgentInput").disabled = true;
+    $("txAmountInput").value = tx.amount;
+    $("txTypeInput").value = tx.type;
+    $("txRateInput").value = tx.commissionRate;
+    $("txStatusInput").value = tx.status;
+  } else {
+    $("txAgentInput").disabled = false;
+    $("txAgentInput").value = $("txAgentInput").options[0]?.value || "";
+    $("txAmountInput").value = "";
+    $("txTypeInput").value = "PAYIN";
+    $("txRateInput").value = "";
+    $("txStatusInput").value = "Pending";
+  }
+  updateTxPreview();
+  openModal("txModal");
+}
+
+function updateTxPreview(){
+  const amount = parseFloat($("txAmountInput").value) || 0;
+  const agentId = $("txAgentInput").value;
+  const override = parseFloat($("txRateInput").value);
+  let rate;
+  if (!isNaN(override) && override >= 0) {
+    rate = override;
+  } else {
+    const a = adminState.agents[agentId];
+    rate = a ? Number(a.commissionRate || 0) : 0;
+  }
+  const commission = amount * rate / 100;
+  $("txPreview").textContent = `Commission preview: ${fmtMoney(commission)} (${rate.toFixed(2)}% of ${fmtMoney(amount)})`;
+}
+
+async function onTxSubmit(e){
+  e.preventDefault();
+  const errEl = $("txFormError"); hide(errEl);
+  const editId = $("txEditId").value;
+  const agentId = $("txAgentInput").value;
+  const amount = parseFloat($("txAmountInput").value);
+  const type = $("txTypeInput").value;
+  const status = $("txStatusInput").value;
+  const override = parseFloat($("txRateInput").value);
+
+  if (!agentId){ errEl.textContent = "Select an agent."; show(errEl); return; }
+  if (!(amount > 0)){ errEl.textContent = "Amount > 0."; show(errEl); return; }
+  if (!["PAYIN","PAYOUT"].includes(type)){ errEl.textContent = "Invalid type."; show(errEl); return; }
+
+  const agent = adminState.agents[agentId];
+  if (!agent){ errEl.textContent = "Agent not found."; show(errEl); return; }
+
+  let rate;
+  if (!isNaN(override) && override >= 0){
+    if (override > 100){ errEl.textContent = "Rate cannot exceed 100%."; show(errEl); return; }
+    rate = override;
+  } else {
+    rate = Number(agent.commissionRate || 0);
+  }
+  const commissionAmount = amount * rate / 100;
+
+  try {
+    if (!editId){
+      const newRef = push(ref(db, "transactions"));
+      await set(newRef, {
+        agentId, amount, type,
+        commissionRate: rate,
+        commissionAmount,
+        status,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+      toast("Transaction created", "success");
+    } else {
+      const t = adminState.transactions[editId];
+      const frozenRate = Number(t.commissionRate);
+      await update(ref(db, `transactions/${editId}`), {
+        amount, type, status,
+        commissionRate: frozenRate,
+        commissionAmount: amount * frozenRate / 100,
+        updatedAt: Date.now()
+      });
+      toast("Transaction updated", "success");
+    }
+    closeModal("txModal");
+  } catch(err){
+    errEl.textContent = friendly(err); show(errEl);
+  }
+}
+
+function renderCommissionTable(){
+  const tbody = $("commissionTable").querySelector("tbody");
+  const agents = Object.entries(adminState.agents);
+  if (!agents.length){
+    tbody.innerHTML = `<tr><td colspan="9" class="empty">No agents yet.</td></tr>`;
+    return;
+  }
+  const txs = Object.values(adminState.transactions);
+  tbody.innerHTML = agents.sort((a,b) => (a[1].agentId||"").localeCompare(b[1].agentId||"")).map(([key, a]) => {
+    const agentTxs = txs.filter(t => t.agentId === a.agentId);
+    let vol = 0, comm = 0, pend = 0, paid = 0;
+    agentTxs.forEach(t => {
+      const c = Number(t.commissionAmount) || 0;
+      vol += Number(t.amount) || 0;
+      comm += c;
+      if (t.status === "Pending") pend += c;
+      if (t.status === "Completed") paid += c;
+    });
+    return `
+      <tr>
+        <td><strong>${esc(a.agentId)}</strong></td>
+        <td>${esc(a.name)}</td>
+        <td>${Number(a.commissionRate || 0).toFixed(2)}%</td>
+        <td>${fmtNum(agentTxs.length)}</td>
+        <td>${fmtMoney(vol)}</td>
+        <td>${fmtMoney(comm)}</td>
+        <td>${fmtMoney(pend)}</td>
+        <td>${fmtMoney(paid)}</td>
+        <td><button class="btn btn-ghost btn-sm" data-commkey="${esc(key)}">Change %</button></td>
+      </tr>`;
+  }).join("");
+  tbody.querySelectorAll("[data-commkey]").forEach(btn => {
+    btn.addEventListener("click", () => handleAgentAction("comm", btn.dataset.commkey));
+  });
+}
+
+let agentState = {
+  profile: null,
+  agent: null,
+  transactions: {},
+  unsubTx: null,
+  unsubAgent: null,
+  initialized: false
+};
+
+function initAgent(profile){
+  if (!profile || profile.role !== "agent") return;
+
+  $("agentName").textContent = profile.name || "Agent";
+  $("agentAvatar").textContent = (profile.name || "A").charAt(0).toUpperCase();
+  $("agentIdLabel").textContent = profile.agentId || "—";
+
+  if (agentState.initialized) return;
+  agentState.initialized = true;
+  agentState.profile = profile;
+
+  agentState.unsubAgent = onValue(ref(db, `agents/${profile.agentId}`), (snap) => {
+    if (snap.exists()) {
+      agentState.agent = snap.val();
+      renderAgentProfile();
+    }
+  }, (err) => {
+    console.error("agent record error", err);
+  });
+
+  const txQuery = query(ref(db, "transactions"), orderByChild("agentId"), equalTo(profile.agentId));
+  agentState.unsubTx = onValue(txQuery, (snap) => {
+    agentState.transactions = snap.val() || {};
+    renderAgentStats();
+    renderAgentTxTable();
+    renderAgentRecentTx();
+  }, (err) => {
+    console.error("agent tx read error", err);
+    toast("Failed to load transactions: " + friendly(err), "error");
+  });
+
+  renderAgentProfile();
+  initAgentPayoutsSubscription(profile);
+}
+
+function renderAgentProfile(){
+  const a = agentState.agent || agentState.profile;
+  if (!a) return;
+  $("profileName").textContent = a.name || "—";
+  $("profileEmail").textContent = a.email || "—";
+  $("profileAgentId").textContent = a.agentId || "—";
+  $("profileRate").textContent = Number(a.commissionRate || 0).toFixed(2) + "%";
+  $("profileStatus").textContent = a.status || "—";
+  $("profileCreated").textContent = fmtDate(a.createdAt);
+  $("profileAvatar").textContent = (a.name || "A").charAt(0).toUpperCase();
+  $("agentName").textContent = a.name || "Agent";
+  $("agentIdLabel").textContent = a.agentId || "—";
+}
+
+function renderAgentStats(){
+  const txs = Object.values(agentState.transactions);
+  let vol = 0, comm = 0, pend = 0, paid = 0;
+  txs.forEach(t => {
+    const c = Number(t.commissionAmount) || 0;
+    vol += Number(t.amount) || 0;
+    comm += c;
+    if (t.status === "Pending") pend += c;
+    if (t.status === "Completed") paid += c;
+  });
+  document.querySelector('[data-astat="totalVolume"]').textContent = fmtMoney(vol);
+  document.querySelector('[data-astat="totalCommission"]').textContent = fmtMoney(comm);
+  document.querySelector('[data-astat="pendingCommission"]').textContent = fmtMoney(pend);
+  document.querySelector('[data-astat="paidCommission"]').textContent = fmtMoney(paid);
+  document.querySelector('[data-astat="txCount"]').textContent = fmtNum(txs.length);
+
+  const availEl = document.querySelector('[data-astat="availableBalance"]');
+  if (availEl) {
+    const avail = calcAgentAvailableBalance();
+    availEl.textContent = fmtMoney(avail);
+  }
+}
+
+function renderAgentTxTable(){
+  const tbody = $("agentTxTable").querySelector("tbody");
+  const list = Object.entries(agentState.transactions)
+    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length){
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, t]) => `
+    <tr>
+      <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
+      <td>${fmtDate(t.createdAt)}</td>
+      <td><span class="badge badge-${t.type === "PAYIN" ? "payin" : "payout"}">${esc(t.type)}</span></td>
+      <td>${fmtMoney(t.amount)}</td>
+      <td>${Number(t.commissionRate||0).toFixed(2)}%</td>
+      <td>${fmtMoney(t.commissionAmount)}</td>
+      <td><span class="badge badge-${String(t.status||"").toLowerCase()}">${esc(t.status)}</span></td>
+    </tr>`).join("");
+}
+
+function renderAgentRecentTx(){
+  const tbody = $("agentRecentTxTable").querySelector("tbody");
+  const list = Object.entries(agentState.transactions)
+    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0))
+    .slice(0, 8);
+  if (!list.length){
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, t]) => `
+    <tr>
+      <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
+      <td>${fmtDate(t.createdAt)}</td>
+      <td><span class="badge badge-${t.type === "PAYIN" ? "payin" : "payout"}">${esc(t.type)}</span></td>
+      <td>${fmtMoney(t.amount)}</td>
+      <td>${Number(t.commissionRate||0).toFixed(2)}%</td>
+      <td>${fmtMoney(t.commissionAmount)}</td>
+      <td><span class="badge badge-${String(t.status||"").toLowerCase()}">${esc(t.status)}</span></td>
+    </tr>`).join("");
+}
+
+function calcAvailableBalance(agentId, transactions, payoutRequests) {
+  let earned = 0;
+  Object.values(transactions || {}).forEach(t => {
+    if (t.agentId === agentId && t.status === "Completed") {
+      earned += Number(t.commissionAmount) || 0;
+    }
+  });
+  let paidOut = 0;
+  Object.values(payoutRequests || {}).forEach(p => {
+    if (p.agentId === agentId && (p.status === "Approved" || p.status === "Paid")) {
+      paidOut += Number(p.amount) || 0;
+    }
+  });
+  return Math.max(0, earned - paidOut);
+}
+
+let adminPayoutRequests = {};
+let adminPayoutUnsub = null;
+let currentPayoutId = null;
+
+function updateAdminPayoutBadge() {
+  const badge = document.getElementById("adminPayoutBadge");
+  if (!badge) return;
+  const pending = Object.values(adminPayoutRequests || {}).filter(p => p.status === "Pending").length;
+  if (pending > 0) {
+    badge.textContent = pending;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+function renderAdminPayouts() {
+  const tbody = document.querySelector("#payoutsTable tbody");
+  if (!tbody) return;
+  const filter = document.getElementById("payoutStatusFilter")?.value || "";
+  let list = Object.entries(adminPayoutRequests || {});
+  if (filter) list = list.filter(([,p]) => p.status === filter);
+  list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">No payout requests.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, p]) => {
+    let details = "—";
+    if (p.method === "UPI") {
+      details = `UPI: ${esc(p.upiId || "—")}`;
+    } else {
+      const acc = p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—";
+      details = `A/C: ${esc(acc)} · IFSC: ${esc(p.ifsc || "—")}`;
+    }
+    return `
+      <tr>
+        <td>${fmtDate(p.createdAt)}</td>
+        <td><strong>${esc(p.agentId)}</strong></td>
+        <td>${fmtMoney(p.amount)}</td>
+        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
+        <td>${details}</td>
+        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
+        <td><button class="btn btn-ghost btn-sm" data-payout-act="view" data-id="${esc(id)}">Review</button></td>
+      </tr>`;
+  }).join("");
+  tbody.querySelectorAll("[data-payout-act]").forEach(btn => {
+    btn.addEventListener("click", () => openPayoutView(btn.dataset.id));
+  });
+}
+
+function openPayoutView(id) {
+  const p = adminPayoutRequests[id];
+  if (!p) return;
+  currentPayoutId = id;
+  let html = `
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><span class="muted">Agent:</span> <strong>${esc(p.agentId)}</strong></div>
+      <div><span class="muted">Amount:</span> <strong>${fmtMoney(p.amount)}</strong></div>
+      <div><span class="muted">Method:</span> <strong>${esc(p.method)}</strong></div>
+      <div><span class="muted">Status:</span> <span class="badge badge-${String(p.status).toLowerCase()}">${esc(p.status)}</span></div>
+      <div><span class="muted">Requested:</span> ${fmtDate(p.createdAt)}</div>
+  `;
+  if (p.method === "UPI") {
+    html += `
+      <div style="border-top:1px solid var(--border);padding-top:12px;">
+        <div><span class="muted">UPI ID:</span> <strong>${esc(p.upiId || "—")}</strong></div>
+        <div><span class="muted">Holder Name:</span> <strong>${esc(p.upiName || "—")}</strong></div>
+      </div>`;
+  } else {
+    html += `
+      <div style="border-top:1px solid var(--border);padding-top:12px;">
+        <div><span class="muted">Account Holder:</span> <strong>${esc(p.accountName || "—")}</strong></div>
+        <div><span class="muted">Account Number:</span> <strong>${esc(p.accountNumber || "—")}</strong></div>
+        <div><span class="muted">IFSC:</span> <strong>${esc(p.ifsc || "—")}</strong></div>
+        <div><span class="muted">Bank:</span> <strong>${esc(p.bankName || "—")}</strong></div>
+      </div>`;
+  }
+  html += `</div>`;
+  document.getElementById("payoutViewContent").innerHTML = html;
+  const approveBtn = document.getElementById("payoutApproveBtn");
+  const rejectBtn = document.getElementById("payoutRejectBtn");
+  if (p.status !== "Pending") {
+    approveBtn.style.display = "none";
+    rejectBtn.style.display = "none";
+  } else {
+    approveBtn.style.display = "";
+    rejectBtn.style.display = "";
+  }
+  openModal("payoutViewModal");
+}
+
+document.getElementById("payoutApproveBtn")?.addEventListener("click", async () => {
+  if (!currentPayoutId) return;
+  try {
+    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
+      status: "Approved",
+      approvedAt: Date.now(),
+      approvedBy: auth.currentUser?.uid || "admin"
+    });
+    toast("Payout approved ✅", "success");
+    closeModal("payoutViewModal");
+    currentPayoutId = null;
+  } catch (e) {
+    toast("Failed: " + friendly(e), "error");
+  }
+});
+
+document.getElementById("payoutRejectBtn")?.addEventListener("click", async () => {
+  if (!currentPayoutId) return;
+  try {
+    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
+      status: "Rejected",
+      rejectedAt: Date.now(),
+      rejectedBy: auth.currentUser?.uid || "admin"
+    });
+    toast("Payout rejected", "success");
+    closeModal("payoutViewModal");
+    currentPayoutId = null;
+  } catch (e) {
+    toast("Failed: " + friendly(e), "error");
+  }
+});
+
+function initAdminPayoutsSubscription() {
+  if (adminPayoutUnsub) return;
+  adminPayoutUnsub = onValue(ref(db, "payoutRequests"), (snap) => {
+    adminPayoutRequests = snap.val() || {};
+    renderAdminPayouts();
+    updateAdminPayoutBadge();
+  }, (err) => {
+    console.error("payout read error:", err);
+  });
+
+  const pf = document.getElementById("payoutStatusFilter");
+  if (pf && !pf.dataset.wired) {
+    pf.dataset.wired = "1";
+    pf.addEventListener("change", renderAdminPayouts);
+  }
+}
+
+let agentPayoutRequests = {};
+let agentPayoutUnsub = null;
+
+function calcAgentAvailableBalance() {
+  const profile = agentState.profile;
+  if (!profile) return 0;
+  return calcAvailableBalance(profile.agentId, agentState.transactions, agentPayoutRequests);
+}
+
+function renderAgentPayouts() {
+  const tbody = document.querySelector("#agentPayoutsTable tbody");
+  if (!tbody) return;
+  const list = Object.entries(agentPayoutRequests || {})
+    .filter(([,p]) => !agentState.profile || p.agentId === agentState.profile.agentId)
+    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty">No payout requests yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, p]) => {
+    let details = p.method === "UPI"
+      ? `UPI: ${esc(p.upiId || "—")}`
+      : `A/C: ${esc(p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—")}`;
+    return `
+      <tr>
+        <td>${fmtDate(p.createdAt)}</td>
+        <td>${fmtMoney(p.amount)}</td>
+        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
+        <td>${details}</td>
+        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
+      </tr>`;
+  }).join("");
+}
+
+function openPayoutModal() {
+  const avail = calcAgentAvailableBalance();
+  if (avail <= 0) {
+    toast("No balance available for payout.", "error");
+    return;
+  }
+  document.getElementById("payoutAvailBal").textContent = fmtMoney(avail);
+  document.getElementById("payoutAmountInput").value = "";
+  document.getElementById("payoutAmountInput").max = avail;
+  document.getElementById("payoutMethodInput").value = "Bank Transfer";
+  document.getElementById("bankFields").classList.remove("hidden");
+  document.getElementById("upiFields").classList.add("hidden");
+  ["payoutAccName","payoutAccNo","payoutIfsc","payoutBankName","payoutUpiId","payoutUpiName"].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = "";
+  });
+  const errEl = document.getElementById("payoutFormError");
+  if (errEl) errEl.classList.add("hidden");
+  openModal("payoutModal");
+}
+
+async function onPayoutSubmit(e) {
+  e.preventDefault();
+  const errEl = document.getElementById("payoutFormError");
+  if (errEl) errEl.classList.add("hidden");
+  const profile = agentState.profile;
+  if (!profile) return;
+
+  const amount = parseFloat(document.getElementById("payoutAmountInput").value);
+  const method = document.getElementById("payoutMethodInput").value;
+
+  if (!(amount > 0)) {
+    if (errEl) { errEl.textContent = "Amount must be greater than 0."; errEl.classList.remove("hidden"); }
+    return;
+  }
+  const avail = calcAgentAvailableBalance();
+  if (amount > avail) {
+    if (errEl) { errEl.textContent = `Amount exceeds available balance (${fmtMoney(avail)}).`; errEl.classList.remove("hidden"); }
+    return;
+  }
+  const payload = {
+    agentId: profile.agentId,
+    agentName: profile.name,
+    amount,
+    method,
+    status: "Pending",
+    createdAt: Date.now()
+  };
+  if (method === "UPI") {
+    const upiId = document.getElementById("payoutUpiId").value.trim();
+    const upiName = document.getElementById("payoutUpiName").value.trim();
+    if (!upiId || !upiName) {
+      if (errEl) { errEl.textContent = "Fill UPI ID and Holder Name."; errEl.classList.remove("hidden"); }
+      return;
+    }
+    payload.upiId = upiId;
+    payload.upiName = upiName;
+  } else {
+    const accName = document.getElementById("payoutAccName").value.trim();
+    const accNo = document.getElementById("payoutAccNo").value.trim();
+    const ifsc = document.getElementById("payoutIfsc").value.trim().toUpperCase();
+    const bankName = document.getElementById("payoutBankName").value.trim();
+    if (!accName || !accNo || !ifsc || !bankName) {
+      if (errEl) { errEl.textContent = "Fill all bank details."; errEl.classList.remove("hidden"); }
+      return;
+    }
+    if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)) {
+      if (errEl) { errEl.textContent = "Invalid IFSC format."; errEl.classList.remove("hidden"); }
+      return;
+    }
+    payload.accountName = accName;
+    payload.accountNumber = accNo;
+    payload.ifsc = ifsc;
+    payload.bankName = bankName;
+  }
+
+  try {
+    const newRef = push(ref(db, "payoutRequests"));
+    await set(newRef, payload);
+    toast("Payout request submitted ✅", "success");
+    closeModal("payoutModal");
+  } catch (err) {
+    if (errEl) { errEl.textContent = friendly(err); errEl.classList.remove("hidden"); }
+  }
+}
+
+function initAgentPayoutsSubscription(profile) {
+  if (agentPayoutUnsub) return;
+  const q = query(ref(db, "payoutRequests"), orderByChild("agentId"), equalTo(profile.agentId));
+  agentPayoutUnsub = onValue(q, (snap) => {
+    agentPayoutRequests = snap.val() || {};
+    renderAgentPayouts();
+    renderAgentStats();
+  }, (err) => {
+    console.error("agent payout read:", err);
+  });
+
+  const b1 = document.getElementById("requestPayoutBtn");
+  const b2 = document.getElementById("requestPayoutBtn2");
+  if (b1 && !b1.dataset.wired) { b1.dataset.wired = "1"; b1.addEventListener("click", openPayoutModal); }
+  if (b2 && !b2.dataset.wired) { b2.dataset.wired = "1"; b2.addEventListener("click", openPayoutModal); }
+
+  const methodEl = document.getElementById("payoutMethodInput");
+  if (methodEl && !methodEl.dataset.wired) {
+    methodEl.dataset.wired = "1";
+    methodEl.addEventListener("change", () => {
+      const isBank = methodEl.value === "Bank Transfer";
+      document.getElementById("bankFields").classList.toggle("hidden", !isBank);
+      document.getElementById("upiFields").classList.toggle("hidden", isBank);
+    });
+  }
+
+  const form = document.getElementById("payoutForm");
+  if (form && !form.dataset.wired) {
+    form.dataset.wired = "1";
+    form.addEventListener("submit", onPayoutSubmit);
+  }
+}
+
+hide($("app-admin"));
+hide($("app-agent"));
+
+</script>
+</body>
+</html>
