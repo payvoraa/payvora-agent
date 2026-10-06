@@ -1219,9 +1219,7 @@ window.initAgent = function(profile) {
   if (profile && profile.role === "agent") {
     initAgentPayoutsSubscription(profile);
   }
-};, (err) => {
-    console.error("payout read error:", err);
-  });
+});
 
   // Wire status filter
   const pf = document.getElementById("payoutStatusFilter");
