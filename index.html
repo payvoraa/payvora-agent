@@ -9,7 +9,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
-/* ===================== RESET ===================== */
+/* ============ RESET ============ */
+/* ===================== THEME VARIABLES ===================== */
+:root {
+  --bg-0:#07080d; --bg-1:#0b0d14;
+  --surface:rgba(22,26,38,.72); --surface-2:rgba(30,35,52,.6);
+  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.14);
+  --text:#e9edf5; --text-dim:#8a93a8; --text-mute:#5e6780;
+  --input-bg:rgba(10,12,20,.6);
+  --topbar-bg:rgba(7,8,13,.75);
+  --modal-bg:rgba(3,4,8,.7);
+  --hover-bg:rgba(255,255,255,.04);
+  --hover-bg-2:rgba(255,255,255,.08);
+  --table-hover:rgba(255,255,255,.025);
+  --table-border:rgba(255,255,255,.04);
+}
+body[data-theme="light"] {
+  --bg-0:#f4f6fb; --bg-1:#ffffff;
+  --surface:rgba(255,255,255,.85); --surface-2:rgba(255,255,255,.95);
+  --border:rgba(0,0,0,.08); --border-strong:rgba(0,0,0,.12);
+  --text:#0f172a; --text-dim:#64748b; --text-mute:#94a3b8;
+  --input-bg:#ffffff;
+  --topbar-bg:rgba(255,255,255,.85);
+  --modal-bg:rgba(15,23,42,.5);
+  --hover-bg:rgba(0,0,0,.03);
+  --hover-bg-2:rgba(0,0,0,.06);
+  --table-hover:rgba(0,0,0,.02);
+  --table-border:rgba(0,0,0,.05);
+}
+
+/* ============ RESET ============ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg-0:#07080d;--bg-1:#0b0d14;--bg-2:#111420;
@@ -33,7 +62,7 @@ input,select{font-family:inherit}
 .glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow)}
 
 /* ===================== AUTH ===================== */
-.auth-body{min-height:100vh;display:grid;place-items:center;
+"auth-body" data-theme="dark">{min-height:100vh;display:grid;place-items:center;
   background:radial-gradient(900px 500px at 15% -10%,rgba(108,140,255,.18),transparent 60%),
              radial-gradient(800px 500px at 100% 110%,rgba(139,108,255,.15),transparent 60%),
              var(--bg-0);padding:24px}
@@ -85,7 +114,7 @@ input,select{font-family:inherit}
 .alert-success{background:rgba(46,204,143,.1);border-color:rgba(46,204,143,.3);color:#9af0c6}
 
 /* ===================== APP LAYOUT ===================== */
-.app-body{display:flex;min-height:100vh;background:var(--bg-0)}
+.<body class="app-body" data-theme="dark">{display:flex;min-height:100vh;background:var(--bg-0)}
 .sidebar{width:250px;flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;z-index:40;transition:transform .25s ease}
 .sidebar .brand{padding:0 6px 22px;border-bottom:1px solid var(--border);margin-bottom:18px}
 .nav{display:flex;flex-direction:column;gap:3px;flex:1}
@@ -186,6 +215,9 @@ input,select{font-family:inherit}
 <!--                    LOGIN VIEW                          -->
 <!-- ===================================================== -->
 <div id="app-login" class="auth-body">
+    <button id="loginThemeToggle" title="Toggle theme" style="position:fixed;top:20px;right:20px;z-index:10;width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--text);backdrop-filter:blur(14px);cursor:pointer;">
+    <svg id="loginThemeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
   <div class="auth-glow"></div>
   <main class="auth-container">
     <div class="auth-card glass">
@@ -249,6 +281,11 @@ input,select{font-family:inherit}
         Transactions
       </button>
       <button class="nav-item" data-view="commissions" data-app="admin">
+              <button class="nav-item" data-view="payouts" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        Payout Requests
+        <span class="nav-badge hidden" id="adminPayoutBadge" style="margin-left:auto;background:#ff5d6c;color:#fff;font-size:10px;padding:2px 7px;border-radius:100px;font-weight:700;">0</span>
+      </button>
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
         Commissions
       </button>
@@ -261,6 +298,10 @@ input,select{font-family:inherit}
           <span class="user-role">Administrator</span>
         </div>
       </div>
+            <button class="btn btn-ghost btn-block" id="adminThemeToggle" style="justify-content:flex-start;gap:10px;">
+        <svg id="adminThemeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span>Light Mode</span>
+      </button>
       <button class="btn btn-ghost btn-block" id="adminLogoutBtn">Logout</button>
     </div>
   </aside>
@@ -336,6 +377,38 @@ input,select{font-family:inherit}
           </div>
         </div>
       </div>
+            <!-- ADMIN PAYOUTS -->
+      <div class="view hidden" id="admin-view-payouts">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>Payout Requests</h2>
+            <div class="filters">
+              <select id="payoutStatusFilter" class="select">
+                <option value="">All Status</option>
+                <option>Pending</option>
+                <option>Approved</option>
+                <option>Rejected</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="payoutsTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Agent</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
       <!-- ADMIN COMMISSIONS -->
       <div class="view hidden" id="admin-view-commissions">
@@ -374,6 +447,10 @@ input,select{font-family:inherit}
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         My Transactions
       </button>
+            <button class="nav-item" data-view="payouts" data-app="agent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+        My Payouts
+      </button>
       <button class="nav-item" data-view="profile" data-app="agent">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
         Profile
@@ -387,6 +464,10 @@ input,select{font-family:inherit}
           <span class="user-role" id="agentIdLabel">—</span>
         </div>
       </div>
+            <button class="btn btn-ghost btn-block" id="agentThemeToggle" style="justify-content:flex-start;gap:10px;">
+        <svg id="agentThemeIcon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span>Light Mode</span>
+      </button>
       <button class="btn btn-ghost btn-block" id="agentLogoutBtn">Logout</button>
     </div>
   </aside>
@@ -403,6 +484,13 @@ input,select{font-family:inherit}
     <section class="content">
       <div class="view" id="agent-view-dashboard">
         <div class="stats-grid">
+                    <div class="stat-card glass" style="grid-column:1/-1;background:linear-gradient(135deg,#6c8cff 0%,#8b6cff 100%);border:none;color:#fff;">
+            <span class="stat-label" style="color:rgba(255,255,255,.85);">Available Balance (for Payout)</span>
+            <span class="stat-value" style="color:#fff;" data-astat="availableBalance">—</span>
+            <button class="btn" id="requestPayoutBtn" style="align-self:flex-start;margin-top:8px;background:#fff;color:#6c8cff;font-weight:700;">
+              📤 Request Payout
+            </button>
+          </div>
           <div class="stat-card glass"><span class="stat-label">Total Volume</span><span class="stat-value" data-astat="totalVolume">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Total Commission</span><span class="stat-value" data-astat="totalCommission">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Pending Commission</span><span class="stat-value" data-astat="pendingCommission">—</span></div>
@@ -426,6 +514,28 @@ input,select{font-family:inherit}
             <table class="data-table" id="agentTxTable">
               <thead><tr><th>Tx ID</th><th>Date</th><th>Type</th><th>Amount</th><th>Rate</th><th>Commission</th><th>Status</th></tr></thead>
               <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+            <div class="view hidden" id="agent-view-payouts">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>My Payout Requests</h2>
+            <button class="btn btn-primary" id="requestPayoutBtn2">+ New Request</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="agentPayoutsTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -544,11 +654,121 @@ input,select{font-family:inherit}
 
 <!-- Toasts -->
 <div class="toast-stack" id="toastStack"></div>
+  <!-- ===================================================== -->
+<!--           PAYOUT REQUEST MODAL (Agent)                 -->
+<!-- ===================================================== -->
+<div class="modal-backdrop hidden" id="payoutModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3>Request Payout</h3>
+      <button class="icon-btn" data-close="payoutModal">✕</button>
+    </div>
+    <form id="payoutForm" class="modal-body">
+      <div class="alert alert-info">Available Balance: <strong id="payoutAvailBal">—</strong></div>
+
+      <div class="field">
+        <label>Amount (₹)</label>
+        <input type="number" id="payoutAmountInput" step="0.01" min="1" placeholder="5000" required />
+      </div>
+
+      <div class="field">
+        <label>Payout Method</label>
+        <select id="payoutMethodInput" class="select" required>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="UPI">UPI</option>
+        </select>
+      </div>
+
+      <div id="bankFields">
+        <div class="field"><label>Account Holder Name</label><input type="text" id="payoutAccName" placeholder="Full name" /></div>
+        <div class="field"><label>Account Number</label><input type="text" id="payoutAccNo" placeholder="1234567890" /></div>
+        <div class="field"><label>IFSC Code</label><input type="text" id="payoutIfsc" placeholder="HDFC0001234" /></div>
+        <div class="field"><label>Bank Name</label><input type="text" id="payoutBankName" placeholder="HDFC Bank" /></div>
+      </div>
+
+      <div id="upiFields" class="hidden">
+        <div class="field"><label>UPI ID</label><input type="text" id="payoutUpiId" placeholder="yourname@upi" /></div>
+        <div class="field"><label>UPI Holder Name</label><input type="text" id="payoutUpiName" placeholder="Full name" /></div>
+      </div>
+
+      <div id="payoutFormError" class="alert alert-error hidden"></div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="payoutModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="payoutSubmitBtn">Submit Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!--           PAYOUT VIEW MODAL (Admin)                    -->
+<!-- ===================================================== -->
+<div class="modal-backdrop hidden" id="payoutViewModal">
+  <div class="modal glass">
+    <div class="modal-head">
+      <h3>Payout Request Details</h3>
+      <button class="icon-btn" data-close="payoutViewModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="payoutViewContent"></div>
+      <div class="modal-actions">
+        <button class="btn btn-danger" id="payoutRejectBtn">Reject</button>
+        <button class="btn btn-success" id="payoutApproveBtn" style="background:#2ecc8f;color:#fff;">Approve & Mark Paid</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
 
 <!-- ===================================================== -->
 <!--                  APPLICATION SCRIPT                    -->
 <!-- ===================================================== -->
 <script type="module">
+  /* ============================================================
+   THEME TOGGLE
+============================================================ */
+function initTheme() {
+  const saved = localStorage.getItem("payvora-theme") || "dark";
+  document.body.setAttribute("data-theme", saved);
+  updateThemeIcons(saved);
+}
+function toggleTheme() {
+  const cur = document.body.getAttribute("data-theme") || "dark";
+  const next = cur === "dark" ? "light" : "dark";
+  document.body.setAttribute("data-theme", next);
+  localStorage.setItem("payvora-theme", next);
+  updateThemeIcons(next);
+}
+function updateThemeIcons(theme) {
+  const sunSvg = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  const moonSvg = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  const icon = theme === "dark" ? sunSvg : moonSvg;
+
+  // Update all theme icons (login, admin, agent)
+  ["loginThemeIcon", "adminThemeIcon", "agentThemeIcon"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = icon;
+  });
+
+  // Update theme toggle button labels
+  const label = theme === "dark" ? "Light Mode" : "Dark Mode";
+  document.querySelectorAll("#adminThemeToggle span, #agentThemeToggle span").forEach(span => {
+    span.textContent = label;
+  });
+}
+
+// Wire up all theme toggle buttons
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  const btns = ["loginThemeToggle", "adminThemeToggle", "agentThemeToggle"];
+  btns.forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.addEventListener("click", toggleTheme);
+  });
+});
+initTheme();
 /* ============================================================
    FIREBASE INIT
 ============================================================ */
@@ -647,6 +867,372 @@ $("confirmOkBtn").addEventListener("click", () => {
 ============================================================ */
 function showLogin(){ 
   show($("app-login")); hide($("app-admin")); hide($("app-agent")); 
+  /* ============================================================
+   ============== PAYOUT SYSTEM ==============================
+============================================================ */
+
+/* ---------- Shared: Calculate Available Balance ---------- */
+function calcAvailableBalance(agentId, transactions, payoutRequests) {
+  // Total earned = sum of commission from Completed transactions
+  let earned = 0;
+  Object.values(transactions || {}).forEach(t => {
+    if (t.agentId === agentId && t.status === "Completed") {
+      earned += Number(t.commissionAmount) || 0;
+    }
+  });
+  // Already paid out = Approved/Paid requests
+  let paidOut = 0;
+  Object.values(payoutRequests || {}).forEach(p => {
+    if (p.agentId === agentId && (p.status === "Approved" || p.status === "Paid")) {
+      paidOut += Number(p.amount) || 0;
+    }
+  });
+  return Math.max(0, earned - paidOut);
+}
+
+/* ============================================================
+   ADMIN — PAYOUT MANAGEMENT
+============================================================ */
+let adminPayoutRequests = {};
+let adminPayoutUnsub = null;
+let currentPayoutId = null;
+
+function updateAdminPayoutBadge() {
+  const badge = document.getElementById("adminPayoutBadge");
+  if (!badge) return;
+  const pending = Object.values(adminPayoutRequests || {})
+    .filter(p => p.status === "Pending").length;
+  if (pending > 0) {
+    badge.textContent = pending;
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+function renderAdminPayouts() {
+  const tbody = document.querySelector("#payoutsTable tbody");
+  if (!tbody) return;
+  const filter = document.getElementById("payoutStatusFilter")?.value || "";
+  let list = Object.entries(adminPayoutRequests || {});
+  if (filter) list = list.filter(([,p]) => p.status === filter);
+  list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">No payout requests.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map(([id, p]) => {
+    let details = "—";
+    if (p.method === "UPI") {
+      details = `UPI: ${esc(p.upiId || "—")}`;
+    } else {
+      const acc = p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—";
+      details = `A/C: ${esc(acc)} · IFSC: ${esc(p.ifsc || "—")}`;
+    }
+    return `
+      <tr>
+        <td>${fmtDate(p.createdAt)}</td>
+        <td><strong>${esc(p.agentId)}</strong></td>
+        <td>${fmtMoney(p.amount)}</td>
+        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
+        <td>${details}</td>
+        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
+        <td><button class="btn btn-ghost btn-sm" data-payout-act="view" data-id="${esc(id)}">Review</button></td>
+      </tr>`;
+  }).join("");
+
+  tbody.querySelectorAll("[data-payout-act]").forEach(btn => {
+    btn.addEventListener("click", () => openPayoutView(btn.dataset.id));
+  });
+}
+
+function openPayoutView(id) {
+  const p = adminPayoutRequests[id];
+  if (!p) return;
+  currentPayoutId = id;
+  let html = `
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><span class="muted">Agent:</span> <strong>${esc(p.agentId)}</strong></div>
+      <div><span class="muted">Amount:</span> <strong>${fmtMoney(p.amount)}</strong></div>
+      <div><span class="muted">Method:</span> <strong>${esc(p.method)}</strong></div>
+      <div><span class="muted">Status:</span> <span class="badge badge-${String(p.status).toLowerCase()}">${esc(p.status)}</span></div>
+      <div><span class="muted">Requested:</span> ${fmtDate(p.createdAt)}</div>
+  `;
+  if (p.method === "UPI") {
+    html += `
+      <div style="border-top:1px solid var(--border);padding-top:12px;">
+        <div><span class="muted">UPI ID:</span> <strong>${esc(p.upiId || "—")}</strong></div>
+        <div><span class="muted">Holder Name:</span> <strong>${esc(p.upiName || "—")}</strong></div>
+      </div>`;
+  } else {
+    html += `
+      <div style="border-top:1px solid var(--border);padding-top:12px;">
+        <div><span class="muted">Account Holder:</span> <strong>${esc(p.accountName || "—")}</strong></div>
+        <div><span class="muted">Account Number:</span> <strong>${esc(p.accountNumber || "—")}</strong></div>
+        <div><span class="muted">IFSC:</span> <strong>${esc(p.ifsc || "—")}</strong></div>
+        <div><span class="muted">Bank:</span> <strong>${esc(p.bankName || "—")}</strong></div>
+      </div>`;
+  }
+  html += `</div>`;
+  document.getElementById("payoutViewContent").innerHTML = html;
+
+  const approveBtn = document.getElementById("payoutApproveBtn");
+  const rejectBtn = document.getElementById("payoutRejectBtn");
+  if (p.status !== "Pending") {
+    approveBtn.style.display = "none";
+    rejectBtn.style.display = "none";
+  } else {
+    approveBtn.style.display = "";
+    rejectBtn.style.display = "";
+  }
+  openModal("payoutViewModal");
+}
+
+/* ---------- Approve / Reject Buttons ---------- */
+document.getElementById("payoutApproveBtn")?.addEventListener("click", async () => {
+  if (!currentPayoutId) return;
+  try {
+    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
+      status: "Approved",
+      approvedAt: Date.now(),
+      approvedBy: auth.currentUser?.uid || "admin"
+    });
+    toast("Payout approved ✅", "success");
+    closeModal("payoutViewModal");
+    currentPayoutId = null;
+  } catch (e) {
+    toast("Failed: " + friendly(e), "error");
+  }
+});
+
+document.getElementById("payoutRejectBtn")?.addEventListener("click", async () => {
+  if (!currentPayoutId) return;
+  try {
+    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
+      status: "Rejected",
+      rejectedAt: Date.now(),
+      rejectedBy: auth.currentUser?.uid || "admin"
+    });
+    toast("Payout rejected", "success");
+    closeModal("payoutViewModal");
+    currentPayoutId = null;
+  } catch (e) {
+    toast("Failed: " + friendly(e), "error");
+  }
+);
+
+/* ---------- Subscribe to Payout Requests (Admin) ---------- */
+function initAdminPayoutsSubscription() {
+  if (adminPayoutUnsub) return;
+  adminPayoutUnsub = onValue(ref(db, "payoutRequests"), (snap) => {
+    adminPayoutRequests = snap.val() || {};
+    renderAdminPayouts();
+    updateAdminPayoutBadge();
+  }
+/* ============================================================
+   AGENT — PAYOUT REQUESTS
+============================================================ */
+let agentPayoutRequests = {};
+let agentPayoutUnsub = null;
+
+function calcAgentAvailableBalance() {
+  const profile = agentState.profile;
+  if (!profile) return 0;
+  let earned = 0;
+  Object.values(agentState.transactions || {}).forEach(t => {
+    if (t.agentId === profile.agentId && t.status === "Completed") {
+      earned += Number(t.commissionAmount) || 0;
+    }
+  });
+  let paidOut = 0;
+  Object.values(agentPayoutRequests || {}).forEach(p => {
+    if (p.agentId === profile.agentId && (p.status === "Approved" || p.status === "Paid")) {
+      paidOut += Number(p.amount) || 0;
+    }
+  });
+  return Math.max(0, earned - paidOut);
+}
+
+function renderAgentPayouts() {
+  const tbody = document.querySelector("#agentPayoutsTable tbody");
+  if (!tbody) return;
+  const list = Object.entries(agentPayoutRequests || {})
+    .filter(([,p]) => !agentState.profile || p.agentId === agentState.profile.agentId)
+    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty">No payout requests yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = list.map(([id, p]) => {
+    let details = p.method === "UPI"
+      ? `UPI: ${esc(p.upiId || "—")}`
+      : `A/C: ${esc(p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—")}`;
+    return `
+      <tr>
+        <td>${fmtDate(p.createdAt)}</td>
+        <td>${fmtMoney(p.amount)}</td>
+        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
+        <td>${details}</td>
+        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
+      </tr>`;
+  }).join("");
+}
+
+function openPayoutModal() {
+  const avail = calcAgentAvailableBalance();
+  if (avail <= 0) {
+    toast("No balance available for payout. Complete transactions first.", "error");
+    return;
+  }
+  document.getElementById("payoutAvailBal").textContent = fmtMoney(avail);
+  document.getElementById("payoutAmountInput").value = "";
+  document.getElementById("payoutAmountInput").max = avail;
+  document.getElementById("payoutMethodInput").value = "Bank Transfer";
+  document.getElementById("bankFields").classList.remove("hidden");
+  document.getElementById("upiFields").classList.add("hidden");
+  ["payoutAccName","payoutAccNo","payoutIfsc","payoutBankName","payoutUpiId","payoutUpiName"].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = "";
+  });
+  const errEl = document.getElementById("payoutFormError");
+  if (errEl) errEl.classList.add("hidden");
+  openModal("payoutModal");
+}
+
+async function onPayoutSubmit(e) {
+  e.preventDefault();
+  const errEl = document.getElementById("payoutFormError");
+  if (errEl) errEl.classList.add("hidden");
+  const profile = agentState.profile;
+  if (!profile) return;
+
+  const amount = parseFloat(document.getElementById("payoutAmountInput").value);
+  const method = document.getElementById("payoutMethodInput").value;
+
+  if (!(amount > 0)) {
+    if (errEl) { errEl.textContent = "Amount must be greater than 0."; errEl.classList.remove("hidden"); }
+    return;
+  }
+
+  const avail = calcAgentAvailableBalance();
+  if (amount > avail) {
+    if (errEl) { errEl.textContent = `Amount exceeds available balance (${fmtMoney(avail)}).`; errEl.classList.remove("hidden"); }
+    return;
+  }
+
+  const payload = {
+    agentId: profile.agentId,
+    agentName: profile.name,
+    amount,
+    method,
+    status: "Pending",
+    createdAt: Date.now()
+  };
+
+  if (method === "UPI") {
+    const upiId = document.getElementById("payoutUpiId").value.trim();
+    const upiName = document.getElementById("payoutUpiName").value.trim();
+    if (!upiId || !upiName) {
+      if (errEl) { errEl.textContent = "Please fill UPI ID and Holder Name."; errEl.classList.remove("hidden"); }
+      return;
+    }
+    payload.upiId = upiId;
+    payload.upiName = upiName;
+  } else {
+    const accName = document.getElementById("payoutAccName").value.trim();
+    const accNo = document.getElementById("payoutAccNo").value.trim();
+    const ifsc = document.getElementById("payoutIfsc").value.trim().toUpperCase();
+    const bankName = document.getElementById("payoutBankName").value.trim();
+    if (!accName || !accNo || !ifsc || !bankName) {
+      if (errEl) { errEl.textContent = "Please fill all bank details."; errEl.classList.remove("hidden"); }
+      return;
+    }
+    if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)) {
+      if (errEl) { errEl.textContent = "Invalid IFSC code format."; errEl.classList.remove("hidden"); }
+      return;
+    }
+    payload.accountName = accName;
+    payload.accountNumber = accNo;
+    payload.ifsc = ifsc;
+    payload.bankName = bankName;
+  }
+
+  try {
+    const newRef = push(ref(db, "payoutRequests"));
+    await set(newRef, payload);
+    toast("Payout request submitted ✅", "success");
+    closeModal("payoutModal");
+  } catch (err) {
+    if (errEl) { errEl.textContent = friendly(err); errEl.classList.remove("hidden"); }
+  }
+}
+
+function initAgentPayoutsSubscription(profile) {
+  if (agentPayoutUnsub) return;
+  const q = query(ref(db, "payoutRequests"), orderByChild("agentId"), equalTo(profile.agentId));
+  agentPayoutUnsub = onValue(q, (snap) => {
+    agentPayoutRequests = snap.val() || {};
+    renderAgentPayouts();
+    renderAgentStats();
+  }, (err) => console.error("agent payout read:", err));
+
+  // Wire buttons
+  const b1 = document.getElementById("requestPayoutBtn");
+  const b2 = document.getElementById("requestPayoutBtn2");
+  if (b1 && !b1.dataset.wired) { b1.dataset.wired = "1"; b1.addEventListener("click", openPayoutModal); }
+  if (b2 && !b2.dataset.wired) { b2.dataset.wired = "1"; b2.addEventListener("click", openPayoutModal); }
+
+  // Method change
+  const methodEl = document.getElementById("payoutMethodInput");
+  if (methodEl && !methodEl.dataset.wired) {
+    methodEl.dataset.wired = "1";
+    methodEl.addEventListener("change", () => {
+      const isBank = methodEl.value === "Bank Transfer";
+      document.getElementById("bankFields").classList.toggle("hidden", !isBank);
+      document.getElementById("upiFields").classList.toggle("hidden", isBank);
+    });
+  }
+
+  // Submit
+  const form = document.getElementById("payoutForm");
+  if (form && !form.dataset.wired) {
+    form.dataset.wired = "1";
+    form.addEventListener("submit", onPayoutSubmit);
+  }
+}
+
+/* ============================================================
+   WIRE-UP: Hook into Admin & Agent Init
+============================================================ */
+
+// Hook admin — call from initAdmin
+const _origInitAdmin = initAdmin;
+window.initAdmin = function(profile) {
+  _origInitAdmin(profile);
+  if (profile && profile.role === "admin") {
+    initAdminPayoutsSubscription();
+  }
+};
+
+// Hook agent — call from initAgent
+const _origInitAgent = initAgent;
+window.initAgent = function(profile) {
+  _origInitAgent(profile);
+  if (profile && profile.role === "agent") {
+    initAgentPayoutsSubscription(profile);
+  }
+};, (err) => {
+    console.error("payout read error:", err);
+  });
+
+  // Wire status filter
+  const pf = document.getElementById("payoutStatusFilter");
+  if (pf && !pf.dataset.wired) {
+    pf.dataset.wired = "1";
+    pf.addEventListener("change", renderAdminPayouts);
+  }
+}
 }
 function showAdmin(){ 
   hide($("app-login")); show($("app-admin")); hide($("app-agent")); 
@@ -852,6 +1438,7 @@ function initAdmin(profile){
     renderRecentAdminTx();
     renderCommissionTable();
     populateAgentFilters();
+    initAdminPayoutsSubscription();
   }, (err) => {
     console.error("agents read error", err);
     toast("Failed to load agents: " + friendly(err), "error");
@@ -1373,6 +1960,7 @@ function initAgent(profile){
     if (snap.exists()) {
       agentState.agent = snap.val();
       renderAgentProfile();
+      initAgentPayoutsSubscription(profile);
     }
   }, (err) => {
     console.error("agent record error", err);
@@ -1423,6 +2011,13 @@ function renderAgentStats(){
   document.querySelector('[data-astat="pendingCommission"]').textContent = fmtMoney(pend);
   document.querySelector('[data-astat="paidCommission"]').textContent = fmtMoney(paid);
   document.querySelector('[data-astat="txCount"]').textContent = fmtNum(txs.length);
+
+  // Available balance for payout
+  const availEl = document.querySelector('[data-astat="availableBalance"]');
+  if (availEl) {
+    const avail = calcAgentAvailableBalance();
+    availEl.textContent = fmtMoney(avail);
+  }
 }
 
 function renderAgentTxTable(){
