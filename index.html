@@ -8,39 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-/* ===================== THEME VARIABLES ===================== */
-:root {
-  --bg-0:#07080d; --bg-1:#0b0d14; --bg-2:#111420;
-  --surface:rgba(22,26,38,.72); --surface-2:rgba(30,35,52,.6);
-  --border:rgba(255,255,255,.08); --border-strong:rgba(255,255,255,.14);
-  --text:#e9edf5; --text-dim:#8a93a8; --text-mute:#5e6780;
-  --input-bg:rgba(10,12,20,.6);
-  --topbar-bg:rgba(7,8,13,.75);
-  --modal-bg:rgba(3,4,8,.7);
-  --hover-bg:rgba(255,255,255,.04);
-  --hover-bg-2:rgba(255,255,255,.08);
-  --table-hover:rgba(255,255,255,.025);
-  --table-border:rgba(255,255,255,.04);
-  --accent:#6c8cff; --accent-2:#8b6cff;
-  --accent-grad:linear-gradient(135deg,#6c8cff 0%,#8b6cff 100%);
-  --success:#2ecc8f; --warn:#f5a623; --danger:#ff5d6c; --info:#4fb4ff;
-  --radius:14px; --radius-sm:10px;
-  --shadow:0 20px 50px -20px rgba(0,0,0,.4);
-  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-}
-body[data-theme="light"] {
-  --bg-0:#f4f6fb; --bg-1:#ffffff; --bg-2:#f9fafb;
-  --surface:rgba(255,255,255,.85); --surface-2:rgba(255,255,255,.95);
-  --border:rgba(0,0,0,.08); --border-strong:rgba(0,0,0,.12);
-  --text:#0f172a; --text-dim:#64748b; --text-mute:#94a3b8;
-  --input-bg:#ffffff;
-  --topbar-bg:rgba(255,255,255,.85);
-  --modal-bg:rgba(15,23,42,.5);
-  --hover-bg:rgba(0,0,0,.03);
-  --hover-bg-2:rgba(0,0,0,.06);
-  --table-hover:rgba(0,0,0,.02);
-  --table-border:rgba(0,0,0,.05);
-}
+:root{--bg-0:#07080d;--bg-1:#0b0d14;--bg-2:#111420;--surface:rgba(22,26,38,.72);--surface-2:rgba(30,35,52,.6);--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.14);--text:#e9edf5;--text-dim:#8a93a8;--text-mute:#5e6780;--input-bg:rgba(10,12,20,.6);--topbar-bg:rgba(7,8,13,.75);--modal-bg:rgba(3,4,8,.7);--hover-bg:rgba(255,255,255,.04);--hover-bg-2:rgba(255,255,255,.08);--table-hover:rgba(255,255,255,.025);--table-border:rgba(255,255,255,.04);--accent:#6c8cff;--accent-2:#8b6cff;--accent-grad:linear-gradient(135deg,#6c8cff 0%,#8b6cff 100%);--success:#2ecc8f;--warn:#f5a623;--danger:#ff5d6c;--info:#4fb4ff;--radius:14px;--radius-sm:10px;--shadow:0 20px 50px -20px rgba(0,0,0,.4);--font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+body[data-theme="light"]{--bg-0:#f4f6fb;--bg-1:#ffffff;--bg-2:#f9fafb;--surface:rgba(255,255,255,.85);--surface-2:rgba(255,255,255,.95);--border:rgba(0,0,0,.08);--border-strong:rgba(0,0,0,.12);--text:#0f172a;--text-dim:#64748b;--text-mute:#94a3b8;--input-bg:#ffffff;--topbar-bg:rgba(255,255,255,.85);--modal-bg:rgba(15,23,42,.5);--hover-bg:rgba(0,0,0,.03);--hover-bg-2:rgba(0,0,0,.06);--table-hover:rgba(0,0,0,.02);--table-border:rgba(0,0,0,.05)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{font-family:var(--font);background:var(--bg-0);color:var(--text);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
@@ -56,7 +25,8 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 .auth-card{padding:36px 32px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand-center{justify-content:center;margin-bottom:28px}
-.brand-mark{width:42px;height:42px;border-radius:12px;background:var(--accent-grad);display:grid;place-items:center;font-weight:800;font-size:20px;color:#fff;box-shadow:0 8px 20px -6px rgba(108,140,255,.6)}
+.brand-mark{width:42px;height:42px;border-radius:12px;background:var(--accent-grad);display:grid;place-items:center;font-weight:800;font-size:20px;color:#fff;box-shadow:0 8px 20px -6px rgba(108,140,255,.6);overflow:hidden;flex-shrink:0}
+.brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
 .brand-text{display:flex;flex-direction:column;line-height:1.15}
 .brand-name{font-weight:800;font-size:17px;letter-spacing:.5px}
 .brand-sub{font-size:11px;color:var(--text-dim);letter-spacing:.3px}
@@ -74,8 +44,7 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 .toggle-password{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;color:var(--text-dim);border-radius:8px}
 .toggle-password:hover{color:var(--text);background:var(--hover-bg-2)}
 .auth-foot{text-align:center;color:var(--text-mute);font-size:11.5px;margin-top:22px}
-.login-theme-toggle{position:fixed;top:20px;right:20px;z-index:10;width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--text);backdrop-filter:blur(14px);cursor:pointer;transition:transform .2s}
-.login-theme-toggle:hover{transform:scale(1.08)}
+.login-theme-toggle{position:fixed;top:20px;right:20px;z-index:10;width:42px;height:42px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--text);backdrop-filter:blur(14px);cursor:pointer}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:var(--radius-sm);font-size:13.5px;font-weight:600;transition:transform .12s,opacity .18s;white-space:nowrap}
 .btn:active{transform:scale(.98)}
 .btn-block{width:100%}
@@ -96,15 +65,15 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 .alert-info{background:rgba(79,180,255,.08);border-color:rgba(79,180,255,.25);color:#2d7fbf}
 .alert-success{background:rgba(46,204,143,.1);border-color:rgba(46,204,143,.3);color:#1f9d6c}
 .app-body{display:flex;min-height:100vh;background:var(--bg-0);transition:background .3s}
-.sidebar{width:250px;flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;z-index:40;transition:transform .25s,background .3s}
+.sidebar{width:250px;flex-shrink:0;background:var(--bg-1);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:22px 16px;position:sticky;top:0;height:100vh;z-index:40;transition:transform .25s,background .3s;overflow-y:auto}
 .sidebar .brand{padding:0 6px 22px;border-bottom:1px solid var(--border);margin-bottom:18px}
-.nav{display:flex;flex-direction:column;gap:3px;flex:1;overflow-y:auto}
+.nav{display:flex;flex-direction:column;gap:3px;flex:1}
 .nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;color:var(--text-dim);font-size:13.5px;font-weight:500;text-align:left;transition:background .15s,color .15s}
 .nav-item:hover{background:var(--hover-bg);color:var(--text)}
 .nav-item.active{background:rgba(108,140,255,.12);color:var(--text)}
 .nav-item.active svg{color:var(--accent)}
 .nav-badge{margin-left:auto;background:var(--danger);color:#fff;font-size:10px;padding:2px 7px;border-radius:100px;font-weight:700}
-.sidebar-footer{border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+.sidebar-footer{border-top:1px solid var(--border);padding-top:14px;display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .user-chip{display:flex;align-items:center;gap:10px;padding:4px 4px 8px}
 .avatar{width:36px;height:36px;border-radius:10px;background:var(--accent-grad);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;flex-shrink:0}
 .avatar-lg{width:56px;height:56px;border-radius:14px;font-size:22px}
@@ -113,7 +82,7 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 .user-role{font-size:11px;color:var(--text-dim)}
 .sidebar-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35;opacity:0;pointer-events:none;transition:opacity .25s}
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
-.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;padding:16px 26px;background:var(--topbar-bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:background .3s}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;padding:16px 26px;background:var(--topbar-bg);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 .page-title{font-size:18px;font-weight:700;flex:1}
 .topbar-actions{display:flex;gap:10px;align-items:center}
 .content{padding:24px 26px 48px}
@@ -135,9 +104,9 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 .data-table .empty{text-align:center;color:var(--text-mute);padding:34px 12px}
 .row-actions{display:flex;gap:6px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.2px;border:1px solid transparent}
-.badge-active,.badge-completed,.badge-approved,.badge-paid{background:rgba(46,204,143,.12);color:#1f9d6c;border-color:rgba(46,204,143,.3)}
+.badge-active,.badge-completed,.badge-approved,.badge-paid,.badge-onboarded{background:rgba(46,204,143,.12);color:#1f9d6c;border-color:rgba(46,204,143,.3)}
 .badge-inactive{background:rgba(138,147,168,.12);color:#64748b;border-color:rgba(138,147,168,.3)}
-.badge-pending{background:rgba(245,166,35,.12);color:#c47f00;border-color:rgba(245,166,35,.3)}
+.badge-pending,.badge-onboarding{background:rgba(245,166,35,.12);color:#c47f00;border-color:rgba(245,166,35,.3)}
 .badge-failed,.badge-cancelled,.badge-rejected{background:rgba(255,93,108,.12);color:#c92a3a;border-color:rgba(255,93,108,.3)}
 .badge-payin{background:rgba(79,180,255,.12);color:#2d7fbf;border-color:rgba(79,180,255,.3)}
 .badge-payout{background:rgba(139,108,255,.12);color:#6b4fd1;border-color:rgba(139,108,255,.3)}
@@ -146,6 +115,7 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 .modal-backdrop{position:fixed;inset:0;z-index:100;background:var(--modal-bg);backdrop-filter:blur(6px);display:grid;place-items:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
 .modal-backdrop:not(.hidden){opacity:1;pointer-events:auto}
 .modal{width:100%;max-width:460px;padding:0;max-height:90vh;overflow-y:auto}
+.modal-lg{max-width:640px}
 .modal-sm{max-width:380px}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
 .modal-head h3{font-size:15px;font-weight:600}
@@ -179,18 +149,16 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
 </head>
 <body data-theme="dark">
 
-<!-- LOGIN THEME TOGGLE -->
 <button class="login-theme-toggle hidden" id="loginThemeToggle" title="Toggle theme">
   <svg id="loginThemeIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
 
-<!-- LOGIN VIEW -->
 <div id="app-login" class="auth-body">
   <div class="auth-glow"></div>
   <main class="auth-container">
     <div class="auth-card glass">
       <div class="brand brand-center">
-       <div class="brand-mark" style="overflow:hidden;padding:0;background:transparent;box-shadow:none;"><img src="logo.png" alt="PAYVORA" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
+        <div class="brand-mark" id="loginBrandMark">P</div>
         <div class="brand-text">
           <span class="brand-name">PAYVORA</span>
           <span class="brand-sub">Agent Commission System</span>
@@ -222,13 +190,12 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
     </div>
   </main>
 </div>
-<!-- ===================================================== -->
-<!--                    ADMIN VIEW                          -->
-<!-- ===================================================== -->
+
+<!-- ADMIN VIEW -->
 <div id="app-admin" class="app-body hidden">
   <aside class="sidebar" id="adminSidebar">
     <div class="brand">
-     <div class="brand-mark" style="overflow:hidden;padding:0;background:transparent;box-shadow:none;"><img src="logo.png" alt="PAYVORA" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
+      <div class="brand-mark" id="adminBrandMark">P</div>
       <div class="brand-text">
         <span class="brand-name">PAYVORA</span>
         <span class="brand-sub">Admin Console</span>
@@ -242,6 +209,11 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
       <button class="nav-item" data-view="agents" data-app="admin">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Agents
+      </button>
+      <button class="nav-item" data-view="clients" data-app="admin">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Client Onboarding
+        <span class="nav-badge hidden" id="adminClientBadge">0</span>
       </button>
       <button class="nav-item" data-view="transactions" data-app="admin">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -273,7 +245,6 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
     </div>
   </aside>
   <div class="sidebar-backdrop" id="adminBackdrop"></div>
-
   <div class="main">
     <header class="topbar">
       <button class="icon-btn only-mobile" data-menu="admin" aria-label="Menu">
@@ -284,17 +255,17 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
         <button class="btn btn-primary" id="openTxModalBtn">+ New Transaction</button>
       </div>
     </header>
-
     <section class="content">
-      <!-- ADMIN DASHBOARD -->
       <div class="view" id="admin-view-dashboard">
         <div class="stats-grid">
           <div class="stat-card glass"><span class="stat-label">Total Agents</span><span class="stat-value" data-stat="totalAgents">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Active Agents</span><span class="stat-value" data-stat="activeAgents">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Total Clients</span><span class="stat-value" data-stat="totalClients">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Transaction Volume</span><span class="stat-value" data-stat="totalVolume">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Total Commission</span><span class="stat-value" data-stat="totalCommission">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Pending Commission</span><span class="stat-value" data-stat="pendingCommission">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Paid Commission</span><span class="stat-value" data-stat="paidCommission">—</span></div>
+          <div class="stat-card glass"><span class="stat-label">Pending Clients</span><span class="stat-value" data-stat="pendingClients">—</span></div>
         </div>
         <div class="panel glass">
           <div class="panel-head"><h2>Recent Transactions</h2></div>
@@ -306,8 +277,6 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
           </div>
         </div>
       </div>
-
-      <!-- ADMIN AGENTS -->
       <div class="view hidden" id="admin-view-agents">
         <div class="panel glass">
           <div class="panel-head">
@@ -316,14 +285,34 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
           </div>
           <div class="table-wrap">
             <table class="data-table" id="agentsTable">
-              <thead><tr><th>Agent ID</th><th>Name</th><th>Email</th><th>Commission</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Agent ID</th><th>Name</th><th>Email</th><th>Commission</th><th>Clients</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
             </table>
           </div>
         </div>
       </div>
-
-      <!-- ADMIN TRANSACTIONS -->
+      <div class="view hidden" id="admin-view-clients">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>Client Onboarding</h2>
+            <div class="filters">
+              <select id="clientStatusFilter" class="select">
+                <option value="">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Onboarding">Onboarding</option>
+                <option value="Onboarded">Onboarded</option>
+              </select>
+              <select id="clientAgentFilter" class="select"><option value="">All Agents</option></select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="clientsTable">
+              <thead><tr><th>Client</th><th>Phone</th><th>Business</th><th>Agent</th><th>Balance</th><th>Commission</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody><tr><td colspan="8" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <div class="view hidden" id="admin-view-transactions">
         <div class="panel glass">
           <div class="panel-head">
@@ -344,8 +333,6 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
           </div>
         </div>
       </div>
-
-      <!-- ADMIN PAYOUTS -->
       <div class="view hidden" id="admin-view-payouts">
         <div class="panel glass">
           <div class="panel-head">
@@ -365,8 +352,6 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
           </div>
         </div>
       </div>
-
-      <!-- ADMIN COMMISSIONS -->
       <div class="view hidden" id="admin-view-commissions">
         <div class="panel glass">
           <div class="panel-head"><h2>Agent-wise Commission Report</h2></div>
@@ -382,13 +367,11 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
   </div>
 </div>
 
-<!-- ===================================================== -->
-<!--                    AGENT VIEW                          -->
-<!-- ===================================================== -->
+<!-- AGENT VIEW -->
 <div id="app-agent" class="app-body hidden">
   <aside class="sidebar" id="agentSidebar">
     <div class="brand">
-     <div class="brand-mark" style="overflow:hidden;padding:0;background:transparent;box-shadow:none;"><img src="logo.png" alt="PAYVORA" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
+      <div class="brand-mark" id="agentBrandMark">P</div>
       <div class="brand-text">
         <span class="brand-name">PAYVORA</span>
         <span class="brand-sub">Agent Portal</span>
@@ -398,6 +381,10 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
       <button class="nav-item active" data-view="dashboard" data-app="agent">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
         Dashboard
+      </button>
+      <button class="nav-item" data-view="clients" data-app="agent">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        My Clients
       </button>
       <button class="nav-item" data-view="transactions" data-app="agent">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -428,15 +415,16 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
     </div>
   </aside>
   <div class="sidebar-backdrop" id="agentBackdrop"></div>
-
   <div class="main">
     <header class="topbar">
       <button class="icon-btn only-mobile" data-menu="agent" aria-label="Menu">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <h1 class="page-title" id="agentPageTitle">Dashboard</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" id="openAddClientBtn">+ Add Client</button>
+      </div>
     </header>
-
     <section class="content">
       <div class="view" id="agent-view-dashboard">
         <div class="stats-grid">
@@ -445,6 +433,7 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
             <span class="stat-value" style="color:#fff;" data-astat="availableBalance">—</span>
             <button class="btn" id="requestPayoutBtn" style="align-self:flex-start;margin-top:8px;background:#fff;color:#6c8cff;font-weight:700;">📤 Request Payout</button>
           </div>
+          <div class="stat-card glass"><span class="stat-label">Total Clients</span><span class="stat-value" data-astat="clientCount">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Total Volume</span><span class="stat-value" data-astat="totalVolume">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Total Commission</span><span class="stat-value" data-astat="totalCommission">—</span></div>
           <div class="stat-card glass"><span class="stat-label">Pending Commission</span><span class="stat-value" data-astat="pendingCommission">—</span></div>
@@ -456,6 +445,20 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
           <div class="table-wrap">
             <table class="data-table" id="agentRecentTxTable">
               <thead><tr><th>Tx ID</th><th>Date</th><th>Type</th><th>Amount</th><th>Rate</th><th>Commission</th><th>Status</th></tr></thead>
+              <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" id="agent-view-clients">
+        <div class="panel glass">
+          <div class="panel-head">
+            <h2>My Clients</h2>
+            <button class="btn btn-primary" id="openAddClientBtn2">+ Add Client</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="agentClientsTable">
+              <thead><tr><th>Client</th><th>Phone</th><th>Business</th><th>Balance</th><th>Commission</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody><tr><td colspan="7" class="empty">Loading…</td></tr></tbody>
             </table>
           </div>
@@ -506,17 +509,12 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
     </section>
   </div>
 </div>
-<!-- ===================================================== -->
-<!--                    MODALS                              -->
-<!-- ===================================================== -->
 
-<!-- AGENT MODAL -->
+<!-- =============== MODALS =============== -->
+
 <div class="modal-backdrop hidden" id="agentModal">
   <div class="modal glass">
-    <div class="modal-head">
-      <h3 id="agentModalTitle">Create Agent</h3>
-      <button class="icon-btn" data-close="agentModal">✕</button>
-    </div>
+    <div class="modal-head"><h3 id="agentModalTitle">Create Agent</h3><button class="icon-btn" data-close="agentModal">✕</button></div>
     <form id="agentForm" class="modal-body">
       <input type="hidden" id="agentEditKey" />
       <div class="field"><label>Agent ID</label><input type="text" id="agentIdInput" placeholder="PV001" required /></div>
@@ -524,9 +522,7 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
       <div class="field"><label>Email</label><input type="email" id="agentEmailInput" placeholder="agent@payvora.com" required /></div>
       <div class="field" id="agentPasswordField"><label>Password</label><input type="password" id="agentPasswordInput" placeholder="Min 6 characters" /></div>
       <div class="field"><label>Commission %</label><input type="number" id="agentCommissionInput" step="0.01" min="0" max="100" value="2" required /></div>
-      <div class="field"><label>Status</label>
-        <select id="agentStatusInput" class="select"><option value="active">Active</option><option value="inactive">Inactive</option></select>
-      </div>
+      <div class="field"><label>Status</label><select id="agentStatusInput" class="select"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
       <div id="agentFormError" class="alert alert-error hidden"></div>
       <div class="modal-actions">
         <button type="button" class="btn btn-ghost" data-close="agentModal">Cancel</button>
@@ -536,24 +532,17 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
   </div>
 </div>
 
-<!-- TRANSACTION MODAL -->
 <div class="modal-backdrop hidden" id="txModal">
   <div class="modal glass">
-    <div class="modal-head">
-      <h3 id="txModalTitle">New Transaction</h3>
-      <button class="icon-btn" data-close="txModal">✕</button>
-    </div>
+    <div class="modal-head"><h3 id="txModalTitle">New Transaction</h3><button class="icon-btn" data-close="txModal">✕</button></div>
     <form id="txForm" class="modal-body">
       <input type="hidden" id="txEditId" />
       <div class="field"><label>Agent</label><select id="txAgentInput" class="select" required></select></div>
+      <div class="field"><label>Client (optional)</label><select id="txClientInput" class="select"><option value="">— No Client —</option></select></div>
       <div class="field"><label>Amount (₹)</label><input type="number" id="txAmountInput" step="0.01" min="0.01" placeholder="100000" required /></div>
-      <div class="field"><label>Type</label>
-        <select id="txTypeInput" class="select" required><option value="PAYIN">PAYIN</option><option value="PAYOUT">PAYOUT</option></select>
-      </div>
+      <div class="field"><label>Type</label><select id="txTypeInput" class="select" required><option value="PAYIN">PAYIN</option><option value="PAYOUT">PAYOUT</option></select></div>
       <div class="field"><label>Commission % (override)</label><input type="number" id="txRateInput" step="0.01" min="0" max="100" placeholder="Leave blank to use agent rate" /></div>
-      <div class="field"><label>Status</label>
-        <select id="txStatusInput" class="select"><option>Pending</option><option>Completed</option><option>Failed</option><option>Cancelled</option></select>
-      </div>
+      <div class="field"><label>Status</label><select id="txStatusInput" class="select"><option>Pending</option><option>Completed</option><option>Failed</option><option>Cancelled</option></select></div>
       <div class="alert alert-info" id="txPreview">Commission preview: —</div>
       <div id="txFormError" class="alert alert-error hidden"></div>
       <div class="modal-actions">
@@ -564,13 +553,9 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
   </div>
 </div>
 
-<!-- COMMISSION MODAL -->
 <div class="modal-backdrop hidden" id="commModal">
   <div class="modal glass">
-    <div class="modal-head">
-      <h3>Update Commission — <span id="commAgentId"></span></h3>
-      <button class="icon-btn" data-close="commModal">✕</button>
-    </div>
+    <div class="modal-head"><h3>Update Commission — <span id="commAgentId"></span></h3><button class="icon-btn" data-close="commModal">✕</button></div>
     <form id="commForm" class="modal-body">
       <p class="muted">Current: <strong id="commCurrent">—</strong></p>
       <div class="field"><label>New Commission %</label><input type="number" id="commNewInput" step="0.01" min="0" max="100" required /></div>
@@ -583,13 +568,59 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
   </div>
 </div>
 
-<!-- PAYOUT REQUEST MODAL -->
+<!-- ADD CLIENT MODAL (Agent) -->
+<div class="modal-backdrop hidden" id="clientModal">
+  <div class="modal glass">
+    <div class="modal-head"><h3 id="clientModalTitle">Add New Client</h3><button class="icon-btn" data-close="clientModal">✕</button></div>
+    <form id="clientForm" class="modal-body">
+      <input type="hidden" id="clientEditId" />
+      <div class="field"><label>Client Name</label><input type="text" id="clientNameInput" placeholder="ABC Pvt Ltd" required /></div>
+      <div class="field"><label>Phone Number</label><input type="tel" id="clientPhoneInput" placeholder="+91 9999999999" required /></div>
+      <div class="field"><label>Business Type</label>
+        <select id="clientBusinessInput" class="select" required>
+          <option value="">Select Business</option>
+          <option>Retail</option>
+          <option>E-commerce</option>
+          <option>Service</option>
+          <option>Gaming</option>
+          <option>Education</option>
+          <option>Healthcare</option>
+          <option>Travel</option>
+          <option>Food & Beverage</option>
+          <option>Real Estate</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Expected Monthly Volume (₹)</label><input type="number" id="clientVolumeInput" step="100" min="0" placeholder="100000" /></div>
+      <div class="field"><label>Notes</label><textarea id="clientNotesInput" placeholder="Any additional details…"></textarea></div>
+      <div id="clientFormError" class="alert alert-error hidden"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close="clientModal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Client</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- CLIENT DETAILS MODAL (Admin) -->
+<div class="modal-backdrop hidden" id="clientViewModal">
+  <div class="modal glass modal-lg">
+    <div class="modal-head"><h3>Client Details</h3><button class="icon-btn" data-close="clientViewModal">✕</button></div>
+    <div class="modal-body">
+      <div id="clientViewContent"></div>
+      <div id="clientViewError" class="alert alert-error hidden"></div>
+      <div class="modal-actions" id="clientViewActions">
+        <button class="btn btn-danger" id="clientRejectBtn">Reject</button>
+        <button class="btn btn-ghost" id="clientEditBtn">Edit Details</button>
+        <button class="btn btn-primary" id="clientSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop hidden" id="payoutModal">
   <div class="modal glass">
-    <div class="modal-head">
-      <h3>Request Payout</h3>
-      <button class="icon-btn" data-close="payoutModal">✕</button>
-    </div>
+    <div class="modal-head"><h3>Request Payout</h3><button class="icon-btn" data-close="payoutModal">✕</button></div>
     <form id="payoutForm" class="modal-body">
       <div class="alert alert-info">Available Balance: <strong id="payoutAvailBal">—</strong></div>
       <div class="field"><label>Amount (₹)</label><input type="number" id="payoutAmountInput" step="0.01" min="1" placeholder="5000" required /></div>
@@ -612,30 +643,25 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
       <div id="payoutFormError" class="alert alert-error hidden"></div>
       <div class="modal-actions">
         <button type="button" class="btn btn-ghost" data-close="payoutModal">Cancel</button>
-        <button type="submit" class="btn btn-primary" id="payoutSubmitBtn">Submit Request</button>
+        <button type="submit" class="btn btn-primary">Submit Request</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- PAYOUT VIEW MODAL -->
 <div class="modal-backdrop hidden" id="payoutViewModal">
   <div class="modal glass">
-    <div class="modal-head">
-      <h3>Payout Request Details</h3>
-      <button class="icon-btn" data-close="payoutViewModal">✕</button>
-    </div>
+    <div class="modal-head"><h3>Payout Request Details</h3><button class="icon-btn" data-close="payoutViewModal">✕</button></div>
     <div class="modal-body">
       <div id="payoutViewContent"></div>
       <div class="modal-actions">
         <button class="btn btn-danger" id="payoutRejectBtn">Reject</button>
-        <button class="btn btn-success" id="payoutApproveBtn">Approve & Mark Paid</button>
+        <button class="btn btn-success" id="payoutApproveBtn" style="background:#2ecc8f;color:#fff;">Approve & Mark Paid</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- CONFIRM MODAL -->
 <div class="modal-backdrop hidden" id="confirmModal">
   <div class="modal glass modal-sm">
     <div class="modal-head"><h3 id="confirmTitle">Confirm</h3></div>
@@ -649,22 +675,26 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
   </div>
 </div>
 
-<!-- TOAST STACK -->
 <div class="toast-stack" id="toastStack"></div>
-
 <script type="module">
 
+/* ============================================================
+   FIREBASE IMPORTS
+============================================================ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword }
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, get, set, update, push, onValue, query, orderByChild, equalTo }
+import { getDatabase, ref, get, set, update, push, onValue, query, orderByChild, equalTo, remove }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 import { initializeApp as initSecondaryApp, deleteApp as deleteSecondaryApp }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth as getSecondaryAuth, createUserWithEmailAndPassword as createSecondaryUser }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+/* ============================================================
+   FIREBASE CONFIG
+============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyCplnWHggabghQot4H3dO82VJAI8MWqtKc",
   authDomain: "payvoraa.firebaseapp.com",
@@ -681,6 +711,9 @@ try { getAnalytics(app); } catch(_) {}
 const auth = getAuth(app);
 const db = getDatabase(app);
 
+/* ============================================================
+   HELPERS
+============================================================ */
 const $ = (id) => document.getElementById(id);
 const show = (el) => el && el.classList.remove("hidden");
 const hide = (el) => el && el.classList.add("hidden");
@@ -716,6 +749,9 @@ function friendly(err) {
   return map[code] || err.message || "Something went wrong.";
 }
 
+/* ============================================================
+   MODAL HELPERS
+============================================================ */
 function openModal(id){ show($(id)); }
 function closeModal(id){ hide($(id)); }
 document.querySelectorAll("[data-close]").forEach(b => {
@@ -737,6 +773,9 @@ $("confirmOkBtn").addEventListener("click", () => {
   if (confirmResolve) { confirmResolve(true); confirmResolve = null; }
 });
 
+/* ============================================================
+   THEME TOGGLE
+============================================================ */
 function initTheme() {
   const saved = localStorage.getItem("payvora-theme") || "dark";
   document.body.setAttribute("data-theme", saved);
@@ -764,30 +803,50 @@ function updateThemeIcons(theme) {
 }
 initTheme();
 
-function showLogin(){ show($("app-login")); hide($("app-admin")); hide($("app-agent")); hide($("loginThemeToggle")); }
+/* ============================================================
+   BRAND LOGO
+============================================================ */
+function applyBrandLogo() {
+  const img = '<img src="logo.png" alt="PAYVORA" onerror="this.parentElement.innerHTML=\'P\'" />';
+  ["loginBrandMark","adminBrandMark","agentBrandMark"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = img;
+  });
+}
+applyBrandLogo();
+
+/* ============================================================
+   VIEW ROUTER
+============================================================ */
+function showLogin(){ show($("app-login")); hide($("app-admin")); hide($("app-agent")); show($("loginThemeToggle")); }
 function showAdmin(){ hide($("app-login")); show($("app-admin")); hide($("app-agent")); }
 function showAgent(){ hide($("app-login")); hide($("app-admin")); show($("app-agent")); }
 
+/* ============================================================
+   THEME BUTTONS
+============================================================ */
+$("loginThemeToggle").addEventListener("click", toggleTheme);
+$("adminThemeToggle").addEventListener("click", toggleTheme);
+$("agentThemeToggle").addEventListener("click", toggleTheme);
+
+/* ============================================================
+   GLOBAL STATE
+============================================================ */
 let currentUser = null;
 let currentProfile = null;
 
+/* ============================================================
+   AUTH STATE
+============================================================ */
 onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   currentProfile = null;
 
-  if (!user) {
-    showLogin();
-    show($("loginThemeToggle"));
-    return;
-  }
+  if (!user) { showLogin(); return; }
 
   try {
     const snap = await get(ref(db, `users/${user.uid}`));
-    if (!snap.exists()) {
-      await signOut(auth);
-      showLogin();
-      return;
-    }
+    if (!snap.exists()) { await signOut(auth); showLogin(); return; }
     currentProfile = snap.val();
 
     if (currentProfile.role === "admin") {
@@ -795,31 +854,25 @@ onAuthStateChanged(auth, async (user) => {
       initAdmin(currentProfile);
     } else if (currentProfile.role === "agent") {
       if (currentProfile.status && currentProfile.status !== "active") {
-        await signOut(auth);
-        showLogin();
-        showLoginError("Your account has been disabled.");
-        return;
+        await signOut(auth); showLogin();
+        showLoginError("Your account has been disabled."); return;
       }
       showAgent();
       initAgent(currentProfile);
     } else {
-      await signOut(auth);
-      showLogin();
+      await signOut(auth); showLogin();
     }
   } catch (e) {
     console.error("Profile load error:", e);
-    await signOut(auth);
-    showLogin();
+    await signOut(auth); showLogin();
   }
 });
 
-function showLoginError(msg){
-  const el = $("loginError");
-  el.textContent = msg;
-  show(el);
-}
+/* ============================================================
+   LOGIN
+============================================================ */
+function showLoginError(msg){ const el = $("loginError"); el.textContent = msg; show(el); }
 function clearLoginError(){ hide($("loginError")); }
-
 function setLoginLoading(on){
   const btn = $("loginBtn");
   btn.disabled = on;
@@ -831,10 +884,6 @@ $("togglePassword").addEventListener("click", () => {
   const p = $("password");
   p.type = p.type === "password" ? "text" : "password";
 });
-
-$("loginThemeToggle").addEventListener("click", toggleTheme);
-$("adminThemeToggle").addEventListener("click", toggleTheme);
-$("agentThemeToggle").addEventListener("click", toggleTheme);
 
 async function resolveEmail(identifier){
   const id = identifier.trim();
@@ -852,36 +901,38 @@ $("loginForm").addEventListener("submit", async (e) => {
   const identifier = $("identifier").value.trim();
   const password = $("password").value;
   if (!identifier || !password){ showLoginError("Please enter both fields."); return; }
-
   setLoginLoading(true);
   try {
     let email;
     try { email = await resolveEmail(identifier); }
-    catch (err) {
-      if (err.message === "agent-not-found") email = identifier;
-      else throw err;
-    }
+    catch (err) { if (err.message === "agent-not-found") email = identifier; else throw err; }
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
     console.error(err);
-    if (err.message === "account-disabled") showLoginError("Your account has been disabled.");
-    else showLoginError(friendly(err));
+    showLoginError(friendly(err));
   } finally {
     setLoginLoading(false);
   }
 });
 
+/* ============================================================
+   LOGOUT
+============================================================ */
 async function doLogout(){
   try { await signOut(auth); } catch(_) {}
   showLogin();
-  show($("loginThemeToggle"));
   $("identifier").value = "";
   $("password").value = "";
   clearLoginError();
+  adminState.initialized = false;
+  agentState.initialized = false;
 }
 $("adminLogoutBtn").addEventListener("click", doLogout);
 $("agentLogoutBtn").addEventListener("click", doLogout);
 
+/* ============================================================
+   SIDEBAR / NAV
+============================================================ */
 document.querySelectorAll("[data-menu]").forEach(btn => {
   btn.addEventListener("click", () => {
     const which = btn.dataset.menu;
@@ -910,121 +961,143 @@ document.querySelectorAll(".nav-item").forEach(btn => {
     if (target) target.classList.remove("hidden");
 
     const titles = {
-      dashboard: "Dashboard", agents: "Agents", transactions: "Transactions",
-      commissions: "Commissions", payouts: "Payout Requests", profile: "Profile"
+      dashboard: "Dashboard", agents: "Agents", clients: "Client Onboarding",
+      transactions: "Transactions", commissions: "Commissions",
+      payouts: "Payout Requests", profile: "Profile"
     };
     $(appName === "admin" ? "adminPageTitle" : "agentPageTitle").textContent = titles[viewName] || "Dashboard";
 
     const sidebar = appName === "admin" ? $("adminSidebar") : $("agentSidebar");
     const backdrop = appName === "admin" ? $("adminBackdrop") : $("agentBackdrop");
-    sidebar.classList.remove("open");
-    backdrop.classList.remove("show");
+    sidebar.classList.remove("open"); backdrop.classList.remove("show");
+
+    if (appName === "admin" && viewName === "clients") renderAdminClients();
+    if (appName === "agent" && viewName === "clients") renderAgentClients();
   });
 });
 
+/* ============================================================
+   ADMIN APP
+============================================================ */
 let adminState = {
-  agents: {},
-  transactions: {},
-  unsubAgents: null,
-  unsubTx: null,
+  agents: {}, transactions: {}, clients: {}, payoutRequests: {},
+  unsubAgents: null, unsubTx: null, unsubClients: null, unsubPayout: null,
   initialized: false
 };
 
 function initAdmin(profile){
   if (!profile || profile.role !== "admin") return;
-
   $("adminName").textContent = profile.name || "Admin";
   $("adminAvatar").textContent = (profile.name || "A").charAt(0).toUpperCase();
-
   if (adminState.initialized) return;
   adminState.initialized = true;
 
   adminState.unsubAgents = onValue(ref(db, "agents"), (snap) => {
     adminState.agents = snap.val() || {};
-    renderAdminStats();
-    renderAgentsTable();
-    renderRecentAdminTx();
-    renderCommissionTable();
-    populateAgentFilters();
-  }, (err) => {
-    console.error("agents read error", err);
-    toast("Failed to load agents: " + friendly(err), "error");
+    renderAdminStats(); renderAgentsTable(); renderRecentAdminTx();
+    renderCommissionTable(); populateAgentFilters();
+    renderAdminClients(); updateClientBadge();
   });
 
   adminState.unsubTx = onValue(ref(db, "transactions"), (snap) => {
     adminState.transactions = snap.val() || {};
-    renderAdminStats();
-    renderAdminTxTable();
-    renderRecentAdminTx();
-    renderCommissionTable();
-  }, (err) => {
-    console.error("tx read error", err);
-    toast("Failed to load transactions: " + friendly(err), "error");
+    renderAdminStats(); renderAdminTxTable(); renderRecentAdminTx(); renderCommissionTable();
+  });
+
+  adminState.unsubClients = onValue(ref(db, "clients"), (snap) => {
+    adminState.clients = snap.val() || {};
+    renderAdminClients(); renderAdminStats(); updateClientBadge();
+  });
+
+  adminState.unsubPayout = onValue(ref(db, "payoutRequests"), (snap) => {
+    adminState.payoutRequests = snap.val() || {};
+    renderAdminPayouts(); updatePayoutBadge();
   });
 
   $("openAgentModalBtn").addEventListener("click", () => openAgentModal());
   $("openTxModalBtn").addEventListener("click", () => openTxModal());
   $("txAgentFilter").addEventListener("change", renderAdminTxTable);
   $("txStatusFilter").addEventListener("change", renderAdminTxTable);
+  $("clientStatusFilter").addEventListener("change", renderAdminClients);
+  $("clientAgentFilter").addEventListener("change", renderAdminClients);
   $("commForm").addEventListener("submit", onCommissionSubmit);
   $("agentForm").addEventListener("submit", onAgentSubmit);
   $("txForm").addEventListener("submit", onTxSubmit);
-
+  $("txAgentInput").addEventListener("change", () => populateClientDropdown($("txAgentInput").value, $("txClientInput")));
   ["txAmountInput","txRateInput","txAgentInput"].forEach(id => {
     $(id).addEventListener("input", updateTxPreview);
     $(id).addEventListener("change", updateTxPreview);
   });
-
-  initAdminPayoutsSubscription();
+  $("clientSaveBtn").addEventListener("click", onClientSave);
+  $("clientRejectBtn").addEventListener("click", onClientReject);
+  $("clientEditBtn").addEventListener("click", onClientEdit);
+  $("payoutApproveBtn").addEventListener("click", onPayoutApprove);
+  $("payoutRejectBtn").addEventListener("click", onPayoutReject);
+  $("payoutStatusFilter").addEventListener("change", renderAdminPayouts);
 }
 
 function renderAdminStats(){
   const agents = Object.values(adminState.agents);
   const txs = Object.values(adminState.transactions);
+  const clients = Object.values(adminState.clients);
   let volume = 0, commission = 0, pending = 0, paid = 0;
   txs.forEach(tx => {
     const amt = Number(tx.amount) || 0;
     const comm = Number(tx.commissionAmount) || 0;
-    volume += amt;
-    commission += comm;
+    volume += amt; commission += comm;
     if (tx.status === "Pending") pending += comm;
     if (tx.status === "Completed") paid += comm;
   });
   document.querySelector('[data-stat="totalAgents"]').textContent = fmtNum(agents.length);
   document.querySelector('[data-stat="activeAgents"]').textContent = fmtNum(agents.filter(a => a.status === "active").length);
+  document.querySelector('[data-stat="totalClients"]').textContent = fmtNum(clients.length);
   document.querySelector('[data-stat="totalVolume"]').textContent = fmtMoney(volume);
   document.querySelector('[data-stat="totalCommission"]').textContent = fmtMoney(commission);
   document.querySelector('[data-stat="pendingCommission"]').textContent = fmtMoney(pending);
   document.querySelector('[data-stat="paidCommission"]').textContent = fmtMoney(paid);
+  document.querySelector('[data-stat="pendingClients"]').textContent = fmtNum(clients.filter(c => c.status === "Pending").length);
+}
+
+function updateClientBadge(){
+  const badge = $("adminClientBadge");
+  if (!badge) return;
+  const pending = Object.values(adminState.clients).filter(c => c.status === "Pending").length;
+  if (pending > 0) { badge.textContent = pending; badge.classList.remove("hidden"); }
+  else { badge.classList.add("hidden"); }
+}
+
+function updatePayoutBadge(){
+  const badge = $("adminPayoutBadge");
+  if (!badge) return;
+  const pending = Object.values(adminState.payoutRequests).filter(p => p.status === "Pending").length;
+  if (pending > 0) { badge.textContent = pending; badge.classList.remove("hidden"); }
+  else { badge.classList.add("hidden"); }
 }
 
 function renderAgentsTable(){
   const tbody = $("agentsTable").querySelector("tbody");
   const entries = Object.entries(adminState.agents);
-  if (!entries.length){
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No agents yet. Click "+ Create Agent".</td></tr>`;
-    return;
-  }
-  entries.sort((a,b) => (a[1].agentId || "").localeCompare(b[1].agentId || ""));
-  tbody.innerHTML = entries.map(([key, a]) => `
+  if (!entries.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">No agents yet.</td></tr>`; return; }
+  entries.sort((a,b) => (a[1].agentId||"").localeCompare(b[1].agentId||""));
+  tbody.innerHTML = entries.map(([key, a]) => {
+    const clientCount = Object.values(adminState.clients).filter(c => c.agentId === a.agentId).length;
+    return `
     <tr>
       <td><strong>${esc(a.agentId)}</strong></td>
       <td>${esc(a.name)}</td>
       <td>${esc(a.email || "—")}</td>
       <td>${Number(a.commissionRate || 0).toFixed(2)}%</td>
+      <td>${fmtNum(clientCount)}</td>
       <td><span class="badge badge-${a.status === "active" ? "active" : "inactive"}">${esc(a.status)}</span></td>
-      <td>${fmtDate(a.createdAt)}</td>
       <td>
         <div class="row-actions">
           <button class="btn btn-ghost btn-sm" data-act="edit" data-key="${esc(key)}">Edit</button>
-          <button class="btn btn-ghost btn-sm" data-act="comm" data-key="${esc(key)}">Commission</button>
-          <button class="btn btn-ghost btn-sm" data-act="toggle" data-key="${esc(key)}">
-            ${a.status === "active" ? "Deactivate" : "Activate"}
-          </button>
-          <button class="btn btn-ghost btn-sm" data-act="view-tx" data-key="${esc(key)}">Tx</button>
+          <button class="btn btn-ghost btn-sm" data-act="comm" data-key="${esc(key)}">Comm</button>
+          <button class="btn btn-ghost btn-sm" data-act="toggle" data-key="${esc(key)}">${a.status === "active" ? "Deactivate" : "Activate"}</button>
         </div>
       </td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
   tbody.querySelectorAll("[data-act]").forEach(btn => {
     btn.addEventListener("click", () => handleAgentAction(btn.dataset.act, btn.dataset.key));
   });
@@ -1033,9 +1106,8 @@ function renderAgentsTable(){
 async function handleAgentAction(act, key){
   const a = adminState.agents[key];
   if (!a) return;
-  if (act === "edit") {
-    openAgentModal(a, key);
-  } else if (act === "comm") {
+  if (act === "edit") { openAgentModal(a, key); }
+  else if (act === "comm") {
     $("commAgentId").textContent = a.agentId;
     $("commCurrent").textContent = Number(a.commissionRate || 0).toFixed(2) + "%";
     $("commNewInput").value = Number(a.commissionRate || 0).toFixed(2);
@@ -1051,10 +1123,6 @@ async function handleAgentAction(act, key){
       if (a.uid) await update(ref(db, `users/${a.uid}`), { status: newStatus });
       toast(`Agent ${a.agentId} → ${newStatus}`, "success");
     } catch(err){ toast("Update failed: " + friendly(err), "error"); }
-  } else if (act === "view-tx") {
-    document.querySelector('[data-app="admin"][data-view="transactions"]').click();
-    $("txAgentFilter").value = a.agentId;
-    renderAdminTxTable();
   }
 }
 
@@ -1101,24 +1169,21 @@ async function onAgentSubmit(e){
   const status = $("agentStatusInput").value;
 
   if (!agentId || !name || !email){ errEl.textContent = "Please fill all required fields."; show(errEl); return; }
-  if (!/^[A-Za-z0-9_-]{2,20}$/.test(agentId)){ errEl.textContent = "Agent ID must be 2–20 chars."; show(errEl); return; }
+  if (!/^[A-Za-z0-9_-]{2,20}$/.test(agentId)){ errEl.textContent = "Agent ID must be 2-20 chars."; show(errEl); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ errEl.textContent = "Invalid email."; show(errEl); return; }
-  if (!(commission >= 0 && commission <= 100)){ errEl.textContent = "Commission must be 0–100."; show(errEl); return; }
+  if (!(commission >= 0 && commission <= 100)){ errEl.textContent = "Commission must be 0-100."; show(errEl); return; }
 
   try {
     if (!editKey) {
       const dup = await get(query(ref(db, "agents"), orderByChild("agentId"), equalTo(agentId)));
       if (dup.exists()){ errEl.textContent = `Agent ID "${agentId}" already exists.`; show(errEl); return; }
       if (!password || password.length < 6){ errEl.textContent = "Password min 6 chars."; show(errEl); return; }
-
       const { uid } = await createAgentUserSecondary(email, password);
       await set(ref(db, `users/${uid}`), {
-        role: "agent", agentId, name, email, status,
-        commissionRate: commission, createdAt: Date.now()
+        role: "agent", agentId, name, email, status, commissionRate: commission, createdAt: Date.now()
       });
       await set(ref(db, `agents/${agentId}`), {
-        uid, agentId, name, email, status,
-        commissionRate: commission, createdAt: Date.now()
+        uid, agentId, name, email, status, commissionRate: commission, createdAt: Date.now()
       });
       toast(`Agent ${agentId} created`, "success");
       closeModal("agentModal");
@@ -1131,8 +1196,7 @@ async function onAgentSubmit(e){
     }
   } catch(err){
     console.error(err);
-    errEl.textContent = friendly(err);
-    show(errEl);
+    errEl.textContent = friendly(err); show(errEl);
   }
 }
 
@@ -1141,37 +1205,53 @@ async function onCommissionSubmit(e){
   const errEl = $("commFormError"); hide(errEl);
   const key = $("commForm").dataset.key;
   const newRate = parseFloat($("commNewInput").value);
-  if (!(newRate >= 0 && newRate <= 100)){ errEl.textContent = "Commission 0–100."; show(errEl); return; }
+  if (!(newRate >= 0 && newRate <= 100)){ errEl.textContent = "Commission 0-100."; show(errEl); return; }
   try {
     await update(ref(db, `agents/${key}`), { commissionRate: newRate });
     const a = adminState.agents[key];
     if (a?.uid) await update(ref(db, `users/${a.uid}`), { commissionRate: newRate });
     toast("Commission updated.", "success");
     closeModal("commModal");
-  } catch(err){
-    errEl.textContent = friendly(err); show(errEl);
-  }
+  } catch(err){ errEl.textContent = friendly(err); show(errEl); }
 }
 
 function populateAgentFilters(){
   const sel = $("txAgentFilter");
   const current = sel.value;
   const opts = ['<option value="">All Agents</option>'];
-  Object.values(adminState.agents)
-    .sort((a,b) => (a.agentId||"").localeCompare(b.agentId||""))
-    .forEach(a => {
-      opts.push(`<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)}</option>`);
-    });
+  Object.values(adminState.agents).sort((a,b) => (a.agentId||"").localeCompare(b.agentId||"")).forEach(a => {
+    opts.push(`<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)}</option>`);
+  });
   sel.innerHTML = opts.join("");
   if (current) sel.value = current;
 
   const txSel = $("txAgentInput");
   if (txSel) {
-    txSel.innerHTML = Object.values(adminState.agents)
-      .sort((a,b) => (a.agentId||"").localeCompare(b.agentId||""))
-      .map(a => `<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)} (${Number(a.commissionRate||0).toFixed(2)}%)</option>`)
-      .join("");
+    txSel.innerHTML = Object.values(adminState.agents).sort((a,b) => (a.agentId||"").localeCompare(b.agentId||""))
+      .map(a => `<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)} (${Number(a.commissionRate||0).toFixed(2)}%)</option>`).join("");
   }
+
+  const cf = $("clientAgentFilter");
+  if (cf) {
+    const cur = cf.value;
+    cf.innerHTML = '<option value="">All Agents</option>' + Object.values(adminState.agents)
+      .sort((a,b) => (a.agentId||"").localeCompare(b.agentId||""))
+      .map(a => `<option value="${esc(a.agentId)}">${esc(a.agentId)} — ${esc(a.name)}</option>`).join("");
+    if (cur) cf.value = cur;
+  }
+}
+
+function populateClientDropdown(agentId, targetSel){
+  if (!targetSel) return;
+  const cur = targetSel.value;
+  const opts = ['<option value="">— No Client —</option>'];
+  Object.entries(adminState.clients)
+    .filter(([,c]) => !agentId || c.agentId === agentId)
+    .forEach(([id, c]) => {
+      opts.push(`<option value="${esc(id)}">${esc(c.name)} (${esc(c.phone)})</option>`);
+    });
+  targetSel.innerHTML = opts.join("");
+  if (cur) targetSel.value = cur;
 }
 
 function renderAdminTxTable(){
@@ -1182,10 +1262,7 @@ function renderAdminTxTable(){
   if (agentFilter) list = list.filter(([,t]) => t.agentId === agentFilter);
   if (statusFilter) list = list.filter(([,t]) => t.status === statusFilter);
   list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
-  if (!list.length){
-    tbody.innerHTML = `<tr><td colspan="9" class="empty">No transactions found.</td></tr>`;
-    return;
-  }
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="9" class="empty">No transactions found.</td></tr>`; return; }
   tbody.innerHTML = list.map(([id, t]) => `
     <tr>
       <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
@@ -1210,13 +1287,8 @@ function renderAdminTxTable(){
 
 function renderRecentAdminTx(){
   const tbody = $("adminRecentTxTable").querySelector("tbody");
-  const list = Object.entries(adminState.transactions)
-    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0))
-    .slice(0, 8);
-  if (!list.length){
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`;
-    return;
-  }
+  const list = Object.entries(adminState.transactions).sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0)).slice(0, 8);
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`; return; }
   tbody.innerHTML = list.map(([id, t]) => `
     <tr>
       <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
@@ -1232,9 +1304,8 @@ function renderRecentAdminTx(){
 async function handleTxAction(act, id){
   const t = adminState.transactions[id];
   if (!t) return;
-  if (act === "edit"){
-    openTxModal(id, t);
-  } else if (act === "cycle"){
+  if (act === "edit"){ openTxModal(id, t); }
+  else if (act === "cycle"){
     const order = ["Pending","Completed","Failed","Cancelled"];
     const idx = order.indexOf(t.status);
     const next = order[(idx + 1) % order.length];
@@ -1255,6 +1326,8 @@ function openTxModal(editId = null, tx = null){
   if (tx){
     $("txAgentInput").value = tx.agentId;
     $("txAgentInput").disabled = true;
+    populateClientDropdown(tx.agentId, $("txClientInput"));
+    $("txClientInput").value = tx.clientId || "";
     $("txAmountInput").value = tx.amount;
     $("txTypeInput").value = tx.type;
     $("txRateInput").value = tx.commissionRate;
@@ -1262,6 +1335,7 @@ function openTxModal(editId = null, tx = null){
   } else {
     $("txAgentInput").disabled = false;
     $("txAgentInput").value = $("txAgentInput").options[0]?.value || "";
+    populateClientDropdown($("txAgentInput").value, $("txClientInput"));
     $("txAmountInput").value = "";
     $("txTypeInput").value = "PAYIN";
     $("txRateInput").value = "";
@@ -1276,12 +1350,8 @@ function updateTxPreview(){
   const agentId = $("txAgentInput").value;
   const override = parseFloat($("txRateInput").value);
   let rate;
-  if (!isNaN(override) && override >= 0) {
-    rate = override;
-  } else {
-    const a = adminState.agents[agentId];
-    rate = a ? Number(a.commissionRate || 0) : 0;
-  }
+  if (!isNaN(override) && override >= 0) rate = override;
+  else { const a = adminState.agents[agentId]; rate = a ? Number(a.commissionRate || 0) : 0; }
   const commission = amount * rate / 100;
   $("txPreview").textContent = `Commission preview: ${fmtMoney(commission)} (${rate.toFixed(2)}% of ${fmtMoney(amount)})`;
 }
@@ -1291,6 +1361,7 @@ async function onTxSubmit(e){
   const errEl = $("txFormError"); hide(errEl);
   const editId = $("txEditId").value;
   const agentId = $("txAgentInput").value;
+  const clientId = $("txClientInput").value || null;
   const amount = parseFloat($("txAmountInput").value);
   const type = $("txTypeInput").value;
   const status = $("txStatusInput").value;
@@ -1307,28 +1378,23 @@ async function onTxSubmit(e){
   if (!isNaN(override) && override >= 0){
     if (override > 100){ errEl.textContent = "Rate cannot exceed 100%."; show(errEl); return; }
     rate = override;
-  } else {
-    rate = Number(agent.commissionRate || 0);
-  }
+  } else rate = Number(agent.commissionRate || 0);
   const commissionAmount = amount * rate / 100;
 
   try {
     if (!editId){
       const newRef = push(ref(db, "transactions"));
       await set(newRef, {
-        agentId, amount, type,
-        commissionRate: rate,
-        commissionAmount,
-        status,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
+        agentId, clientId, amount, type,
+        commissionRate: rate, commissionAmount, status,
+        createdAt: Date.now(), updatedAt: Date.now()
       });
       toast("Transaction created", "success");
     } else {
       const t = adminState.transactions[editId];
       const frozenRate = Number(t.commissionRate);
       await update(ref(db, `transactions/${editId}`), {
-        amount, type, status,
+        amount, type, status, clientId,
         commissionRate: frozenRate,
         commissionAmount: amount * frozenRate / 100,
         updatedAt: Date.now()
@@ -1336,26 +1402,20 @@ async function onTxSubmit(e){
       toast("Transaction updated", "success");
     }
     closeModal("txModal");
-  } catch(err){
-    errEl.textContent = friendly(err); show(errEl);
-  }
+  } catch(err){ errEl.textContent = friendly(err); show(errEl); }
 }
 
 function renderCommissionTable(){
   const tbody = $("commissionTable").querySelector("tbody");
   const agents = Object.entries(adminState.agents);
-  if (!agents.length){
-    tbody.innerHTML = `<tr><td colspan="9" class="empty">No agents yet.</td></tr>`;
-    return;
-  }
+  if (!agents.length){ tbody.innerHTML = `<tr><td colspan="9" class="empty">No agents yet.</td></tr>`; return; }
   const txs = Object.values(adminState.transactions);
   tbody.innerHTML = agents.sort((a,b) => (a[1].agentId||"").localeCompare(b[1].agentId||"")).map(([key, a]) => {
     const agentTxs = txs.filter(t => t.agentId === a.agentId);
     let vol = 0, comm = 0, pend = 0, paid = 0;
     agentTxs.forEach(t => {
       const c = Number(t.commissionAmount) || 0;
-      vol += Number(t.amount) || 0;
-      comm += c;
+      vol += Number(t.amount) || 0; comm += c;
       if (t.status === "Pending") pend += c;
       if (t.status === "Completed") paid += c;
     });
@@ -1377,48 +1437,287 @@ function renderCommissionTable(){
   });
 }
 
+/* ============================================================
+   ADMIN — CLIENT ONBOARDING
+============================================================ */
+function renderAdminClients(){
+  const tbody = $("clientsTable").querySelector("tbody");
+  if (!tbody) return;
+  const statusFilter = $("clientStatusFilter").value;
+  const agentFilter = $("clientAgentFilter").value;
+  let list = Object.entries(adminState.clients);
+  if (statusFilter) list = list.filter(([,c]) => c.status === statusFilter);
+  if (agentFilter) list = list.filter(([,c]) => c.agentId === agentFilter);
+  list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="8" class="empty">No clients found.</td></tr>`; return; }
+
+  tbody.innerHTML = list.map(([id, c]) => `
+    <tr>
+      <td><strong>${esc(c.name)}</strong></td>
+      <td>${esc(c.phone || "—")}</td>
+      <td>${esc(c.businessType || "—")}</td>
+      <td>${esc(c.agentId)}</td>
+      <td>${fmtMoney(c.currentBalance || 0)}</td>
+      <td>${fmtMoney(c.commissionEarned || 0)}</td>
+      <td><span class="badge badge-${(c.status||"pending").toLowerCase()}">${esc(c.status || "Pending")}</span></td>
+      <td><button class="btn btn-ghost btn-sm" data-client-view="${esc(id)}">Review</button></td>
+    </tr>`).join("");
+
+  tbody.querySelectorAll("[data-client-view]").forEach(btn => {
+    btn.addEventListener("click", () => openClientView(btn.dataset.clientView));
+  });
+}
+
+let currentClientId = null;
+let clientEditMode = false;
+
+function openClientView(id){
+  const c = adminState.clients[id];
+  if (!c) return;
+  currentClientId = id;
+  clientEditMode = false;
+  const agent = adminState.agents[c.agentId];
+  const readOnly = c.status === "Onboarded" ? "disabled" : "";
+
+  $("clientViewContent").innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="field"><label>Client Name</label><input type="text" id="cvName" value="${esc(c.name)}" ${readOnly} /></div>
+        <div class="field"><label>Phone</label><input type="text" id="cvPhone" value="${esc(c.phone)}" ${readOnly} /></div>
+        <div class="field"><label>Business Type</label><input type="text" id="cvBusiness" value="${esc(c.businessType || "")}" ${readOnly} /></div>
+        <div class="field"><label>Agent</label><input type="text" value="${esc(agent?.name || c.agentId)} (${esc(c.agentId)})" disabled /></div>
+        <div class="field"><label>Expected Volume (₹)</label><input type="number" id="cvVolume" value="${Number(c.expectedVolume || 0)}" ${readOnly} /></div>
+        <div class="field"><label>Status</label>
+          <select id="cvStatus" class="select" ${readOnly}>
+            <option value="Pending" ${c.status==="Pending"?"selected":""}>Pending</option>
+            <option value="Onboarding" ${c.status==="Onboarding"?"selected":""}>Onboarding</option>
+            <option value="Onboarded" ${c.status==="Onboarded"?"selected":""}>Onboarded</option>
+          </select>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:6px;">
+        <h4 style="font-size:13px;color:var(--text-dim);margin-bottom:10px;">Onboarding Details</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="field"><label>Current Balance (₹)</label><input type="number" id="cvBalance" value="${Number(c.currentBalance || 0)}" step="100" ${readOnly} /></div>
+          <div class="field"><label>Commission % (client)</label><input type="number" id="cvRate" value="${Number(c.commissionRate || 0)}" step="0.01" ${readOnly} /></div>
+          <div class="field"><label>Commission Earned (₹)</label><input type="text" value="${fmtMoney(c.commissionEarned || 0)}" disabled /></div>
+          <div class="field"><label>Completed On</label><input type="text" value="${c.onboardingCompletedAt ? fmtDate(c.onboardingCompletedAt) : "—"}" disabled /></div>
+        </div>
+      </div>
+      <div class="field"><label>Notes</label><textarea id="cvNotes" ${readOnly}>${esc(c.notes || "")}</textarea></div>
+    </div>
+  `;
+
+  $("clientSaveBtn").style.display = readOnly ? "none" : "";
+  $("clientEditBtn").style.display = readOnly ? "none" : "none";
+  $("clientRejectBtn").style.display = c.status === "Pending" ? "" : "none";
+
+  openModal("clientViewModal");
+}
+
+function onClientEdit(){
+  clientEditMode = true;
+  ["cvName","cvPhone","cvBusiness","cvVolume","cvBalance","cvRate","cvNotes"].forEach(id => {
+    const el = $(id); if (el) el.disabled = false;
+  });
+  const st = $("cvStatus"); if (st) st.disabled = false;
+  $("clientSaveBtn").style.display = "";
+}
+
+async function onClientSave(){
+  if (!currentClientId) return;
+  const errEl = $("clientViewError"); hide(errEl);
+  const c = adminState.clients[currentClientId];
+  if (!c) return;
+
+  const status = $("cvStatus").value;
+  const balance = parseFloat($("cvBalance").value) || 0;
+  const rate = parseFloat($("cvRate").value) || 0;
+  const commissionEarned = balance * rate / 100;
+
+  const patch = {
+    name: $("cvName").value.trim(),
+    phone: $("cvPhone").value.trim(),
+    businessType: $("cvBusiness").value.trim(),
+    expectedVolume: parseFloat($("cvVolume").value) || 0,
+    status,
+    currentBalance: balance,
+    commissionRate: rate,
+    commissionEarned,
+    notes: $("cvNotes").value.trim(),
+    updatedAt: Date.now()
+  };
+
+  if (status === "Onboarded" && c.status !== "Onboarded") {
+    patch.onboardingCompletedAt = Date.now();
+  }
+
+  if (c.status !== "Onboarded" && status === "Onboarded" && (!patch.currentBalance || !patch.commissionRate)) {
+    if (errEl) { errEl.textContent = "Set Balance and Commission % before marking Onboarded."; show(errEl); }
+    return;
+  }
+
+  try {
+    await update(ref(db, `clients/${currentClientId}`), patch);
+    toast("Client updated ✅", "success");
+    closeModal("clientViewModal");
+  } catch(e){
+    if (errEl) { errEl.textContent = friendly(e); show(errEl); }
+  }
+}
+
+async function onClientReject(){
+  if (!currentClientId) return;
+  const ok = await confirmDialog("Reject Client", "Reject this client request?");
+  if (!ok) return;
+  try {
+    await remove(ref(db, `clients/${currentClientId}`));
+    toast("Client rejected", "success");
+    closeModal("clientViewModal");
+  } catch(e){ toast("Failed: " + friendly(e), "error"); }
+}
+
+/* ============================================================
+   ADMIN — PAYOUTS
+============================================================ */
+function renderAdminPayouts(){
+  const tbody = $("payoutsTable")?.querySelector("tbody");
+  if (!tbody) return;
+  const filter = $("payoutStatusFilter")?.value || "";
+  let list = Object.entries(adminState.payoutRequests);
+  if (filter) list = list.filter(([,p]) => p.status === filter);
+  list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">No payout requests.</td></tr>`; return; }
+  tbody.innerHTML = list.map(([id, p]) => {
+    let details = p.method === "UPI" ? `UPI: ${esc(p.upiId || "—")}` : `A/C: ${esc(p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—")} · IFSC: ${esc(p.ifsc || "—")}`;
+    return `
+      <tr>
+        <td>${fmtDate(p.createdAt)}</td>
+        <td><strong>${esc(p.agentId)}</strong></td>
+        <td>${fmtMoney(p.amount)}</td>
+        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
+        <td>${details}</td>
+        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
+        <td><button class="btn btn-ghost btn-sm" data-payout-view="${esc(id)}">Review</button></td>
+      </tr>`;
+  }).join("");
+  tbody.querySelectorAll("[data-payout-view]").forEach(btn => {
+    btn.addEventListener("click", () => openPayoutView(btn.dataset.payoutView));
+  });
+}
+
+let currentPayoutId = null;
+function openPayoutView(id){
+  const p = adminState.payoutRequests[id];
+  if (!p) return;
+  currentPayoutId = id;
+  let html = `
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><span class="muted">Agent:</span> <strong>${esc(p.agentId)}</strong></div>
+      <div><span class="muted">Amount:</span> <strong>${fmtMoney(p.amount)}</strong></div>
+      <div><span class="muted">Method:</span> <strong>${esc(p.method)}</strong></div>
+      <div><span class="muted">Status:</span> <span class="badge badge-${String(p.status).toLowerCase()}">${esc(p.status)}</span></div>
+      <div><span class="muted">Requested:</span> ${fmtDate(p.createdAt)}</div>
+  `;
+  if (p.method === "UPI") {
+    html += `<div style="border-top:1px solid var(--border);padding-top:12px;">
+      <div><span class="muted">UPI ID:</span> <strong>${esc(p.upiId || "—")}</strong></div>
+      <div><span class="muted">Holder Name:</span> <strong>${esc(p.upiName || "—")}</strong></div></div>`;
+  } else {
+    html += `<div style="border-top:1px solid var(--border);padding-top:12px;">
+      <div><span class="muted">Account Holder:</span> <strong>${esc(p.accountName || "—")}</strong></div>
+      <div><span class="muted">Account Number:</span> <strong>${esc(p.accountNumber || "—")}</strong></div>
+      <div><span class="muted">IFSC:</span> <strong>${esc(p.ifsc || "—")}</strong></div>
+      <div><span class="muted">Bank:</span> <strong>${esc(p.bankName || "—")}</strong></div></div>`;
+  }
+  html += `</div>`;
+  $("payoutViewContent").innerHTML = html;
+  const approveBtn = $("payoutApproveBtn");
+  const rejectBtn = $("payoutRejectBtn");
+  if (p.status !== "Pending") { approveBtn.style.display = "none"; rejectBtn.style.display = "none"; }
+  else { approveBtn.style.display = ""; rejectBtn.style.display = ""; }
+  openModal("payoutViewModal");
+}
+
+async function onPayoutApprove(){
+  if (!currentPayoutId) return;
+  try {
+    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
+      status: "Approved", approvedAt: Date.now(),
+      approvedBy: auth.currentUser?.uid || "admin"
+    });
+    toast("Payout approved ✅", "success");
+    closeModal("payoutViewModal");
+    currentPayoutId = null;
+  } catch(e){ toast("Failed: " + friendly(e), "error"); }
+}
+
+async function onPayoutReject(){
+  if (!currentPayoutId) return;
+  try {
+    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
+      status: "Rejected", rejectedAt: Date.now(),
+      rejectedBy: auth.currentUser?.uid || "admin"
+    });
+    toast("Payout rejected", "success");
+    closeModal("payoutViewModal");
+    currentPayoutId = null;
+  } catch(e){ toast("Failed: " + friendly(e), "error"); }
+}
+
+/* ============================================================
+   AGENT APP
+============================================================ */
 let agentState = {
-  profile: null,
-  agent: null,
-  transactions: {},
-  unsubTx: null,
-  unsubAgent: null,
-  initialized: false
+  profile: null, agent: null, transactions: {}, clients: {}, payoutRequests: {},
+  unsubTx: null, unsubClients: null, unsubPayout: null, initialized: false
 };
 
 function initAgent(profile){
   if (!profile || profile.role !== "agent") return;
-
   $("agentName").textContent = profile.name || "Agent";
   $("agentAvatar").textContent = (profile.name || "A").charAt(0).toUpperCase();
   $("agentIdLabel").textContent = profile.agentId || "—";
-
   if (agentState.initialized) return;
   agentState.initialized = true;
   agentState.profile = profile;
 
-  agentState.unsubAgent = onValue(ref(db, `agents/${profile.agentId}`), (snap) => {
-    if (snap.exists()) {
-      agentState.agent = snap.val();
-      renderAgentProfile();
-    }
-  }, (err) => {
-    console.error("agent record error", err);
+  onValue(ref(db, `agents/${profile.agentId}`), (snap) => {
+    if (snap.exists()) { agentState.agent = snap.val(); renderAgentProfile(); }
   });
 
   const txQuery = query(ref(db, "transactions"), orderByChild("agentId"), equalTo(profile.agentId));
   agentState.unsubTx = onValue(txQuery, (snap) => {
     agentState.transactions = snap.val() || {};
-    renderAgentStats();
-    renderAgentTxTable();
-    renderAgentRecentTx();
-  }, (err) => {
-    console.error("agent tx read error", err);
-    toast("Failed to load transactions: " + friendly(err), "error");
+    renderAgentStats(); renderAgentTxTable(); renderAgentRecentTx();
   });
 
+  const cQuery = query(ref(db, "clients"), orderByChild("agentId"), equalTo(profile.agentId));
+  agentState.unsubClients = onValue(cQuery, (snap) => {
+    agentState.clients = snap.val() || {};
+    renderAgentClients(); renderAgentStats();
+  });
+
+  const pQuery = query(ref(db, "payoutRequests"), orderByChild("agentId"), equalTo(profile.agentId));
+  agentState.unsubPayout = onValue(pQuery, (snap) => {
+    agentState.payoutRequests = snap.val() || {};
+    renderAgentPayouts(); renderAgentStats();
+  });
+
+  $("requestPayoutBtn").addEventListener("click", openPayoutModal);
+  $("requestPayoutBtn2").addEventListener("click", openPayoutModal);
+  $("openAddClientBtn").addEventListener("click", openClientModal);
+  $("openAddClientBtn2").addEventListener("click", openClientModal);
+  $("payoutMethodInput").addEventListener("change", () => {
+    const isBank = $("payoutMethodInput").value === "Bank Transfer";
+    $("bankFields").classList.toggle("hidden", !isBank);
+    $("upiFields").classList.toggle("hidden", isBank);
+  });
+  $("payoutForm").addEventListener("submit", onPayoutSubmit);
+  $("clientForm").addEventListener("submit", onClientSubmit);
+
   renderAgentProfile();
-  initAgentPayoutsSubscription(profile);
 }
 
 function renderAgentProfile(){
@@ -1437,11 +1736,11 @@ function renderAgentProfile(){
 
 function renderAgentStats(){
   const txs = Object.values(agentState.transactions);
+  const clients = Object.values(agentState.clients);
   let vol = 0, comm = 0, pend = 0, paid = 0;
   txs.forEach(t => {
     const c = Number(t.commissionAmount) || 0;
-    vol += Number(t.amount) || 0;
-    comm += c;
+    vol += Number(t.amount) || 0; comm += c;
     if (t.status === "Pending") pend += c;
     if (t.status === "Completed") paid += c;
   });
@@ -1450,22 +1749,34 @@ function renderAgentStats(){
   document.querySelector('[data-astat="pendingCommission"]').textContent = fmtMoney(pend);
   document.querySelector('[data-astat="paidCommission"]').textContent = fmtMoney(paid);
   document.querySelector('[data-astat="txCount"]').textContent = fmtNum(txs.length);
+  document.querySelector('[data-astat="clientCount"]').textContent = fmtNum(clients.length);
 
   const availEl = document.querySelector('[data-astat="availableBalance"]');
-  if (availEl) {
-    const avail = calcAgentAvailableBalance();
-    availEl.textContent = fmtMoney(avail);
-  }
+  if (availEl) availEl.textContent = fmtMoney(calcAgentAvailableBalance());
+}
+
+function calcAvailableBalance(agentId, transactions, payoutRequests){
+  let earned = 0;
+  Object.values(transactions || {}).forEach(t => {
+    if (t.agentId === agentId && t.status === "Completed") earned += Number(t.commissionAmount) || 0;
+  });
+  let paidOut = 0;
+  Object.values(payoutRequests || {}).forEach(p => {
+    if (p.agentId === agentId && (p.status === "Approved" || p.status === "Paid")) paidOut += Number(p.amount) || 0;
+  });
+  return Math.max(0, earned - paidOut);
+}
+
+function calcAgentAvailableBalance(){
+  const profile = agentState.profile;
+  if (!profile) return 0;
+  return calcAvailableBalance(profile.agentId, agentState.transactions, agentState.payoutRequests);
 }
 
 function renderAgentTxTable(){
   const tbody = $("agentTxTable").querySelector("tbody");
-  const list = Object.entries(agentState.transactions)
-    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
-  if (!list.length){
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`;
-    return;
-  }
+  const list = Object.entries(agentState.transactions).sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`; return; }
   tbody.innerHTML = list.map(([id, t]) => `
     <tr>
       <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
@@ -1480,13 +1791,8 @@ function renderAgentTxTable(){
 
 function renderAgentRecentTx(){
   const tbody = $("agentRecentTxTable").querySelector("tbody");
-  const list = Object.entries(agentState.transactions)
-    .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0))
-    .slice(0, 8);
-  if (!list.length){
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`;
-    return;
-  }
+  const list = Object.entries(agentState.transactions).sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0)).slice(0, 8);
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">No transactions yet.</td></tr>`; return; }
   tbody.innerHTML = list.map(([id, t]) => `
     <tr>
       <td title="${esc(id)}">${esc(id.slice(0,8).toUpperCase())}</td>
@@ -1499,270 +1805,180 @@ function renderAgentRecentTx(){
     </tr>`).join("");
 }
 
-function calcAvailableBalance(agentId, transactions, payoutRequests) {
-  let earned = 0;
-  Object.values(transactions || {}).forEach(t => {
-    if (t.agentId === agentId && t.status === "Completed") {
-      earned += Number(t.commissionAmount) || 0;
-    }
-  });
-  let paidOut = 0;
-  Object.values(payoutRequests || {}).forEach(p => {
-    if (p.agentId === agentId && (p.status === "Approved" || p.status === "Paid")) {
-      paidOut += Number(p.amount) || 0;
-    }
-  });
-  return Math.max(0, earned - paidOut);
-}
-
-let adminPayoutRequests = {};
-let adminPayoutUnsub = null;
-let currentPayoutId = null;
-
-function updateAdminPayoutBadge() {
-  const badge = document.getElementById("adminPayoutBadge");
-  if (!badge) return;
-  const pending = Object.values(adminPayoutRequests || {}).filter(p => p.status === "Pending").length;
-  if (pending > 0) {
-    badge.textContent = pending;
-    badge.classList.remove("hidden");
-  } else {
-    badge.classList.add("hidden");
-  }
-}
-
-function renderAdminPayouts() {
-  const tbody = document.querySelector("#payoutsTable tbody");
+/* ============================================================
+   AGENT — CLIENTS
+============================================================ */
+function renderAgentClients(){
+  const tbody = $("agentClientsTable")?.querySelector("tbody");
   if (!tbody) return;
-  const filter = document.getElementById("payoutStatusFilter")?.value || "";
-  let list = Object.entries(adminPayoutRequests || {});
-  if (filter) list = list.filter(([,p]) => p.status === filter);
-  list.sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
-  if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">No payout requests.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = list.map(([id, p]) => {
-    let details = "—";
-    if (p.method === "UPI") {
-      details = `UPI: ${esc(p.upiId || "—")}`;
-    } else {
-      const acc = p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—";
-      details = `A/C: ${esc(acc)} · IFSC: ${esc(p.ifsc || "—")}`;
-    }
-    return `
-      <tr>
-        <td>${fmtDate(p.createdAt)}</td>
-        <td><strong>${esc(p.agentId)}</strong></td>
-        <td>${fmtMoney(p.amount)}</td>
-        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
-        <td>${details}</td>
-        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
-        <td><button class="btn btn-ghost btn-sm" data-payout-act="view" data-id="${esc(id)}">Review</button></td>
-      </tr>`;
-  }).join("");
-  tbody.querySelectorAll("[data-payout-act]").forEach(btn => {
-    btn.addEventListener("click", () => openPayoutView(btn.dataset.id));
+  const list = Object.entries(agentState.clients).sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="7" class="empty">No clients yet. Click "+ Add Client" to add one.</td></tr>`; return; }
+  tbody.innerHTML = list.map(([id, c]) => `
+    <tr>
+      <td><strong>${esc(c.name)}</strong></td>
+      <td>${esc(c.phone || "—")}</td>
+      <td>${esc(c.businessType || "—")}</td>
+      <td>${fmtMoney(c.currentBalance || 0)}</td>
+      <td>${fmtMoney(c.commissionEarned || 0)}</td>
+      <td><span class="badge badge-${(c.status||"pending").toLowerCase()}">${esc(c.status || "Pending")}</span></td>
+      <td><button class="btn btn-ghost btn-sm" data-client-view-agent="${esc(id)}">View</button></td>
+    </tr>`).join("");
+  tbody.querySelectorAll("[data-client-view-agent]").forEach(btn => {
+    btn.addEventListener("click", () => viewAgentClient(btn.dataset.clientViewAgent));
   });
 }
 
-function openPayoutView(id) {
-  const p = adminPayoutRequests[id];
-  if (!p) return;
-  currentPayoutId = id;
-  let html = `
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div><span class="muted">Agent:</span> <strong>${esc(p.agentId)}</strong></div>
-      <div><span class="muted">Amount:</span> <strong>${fmtMoney(p.amount)}</strong></div>
-      <div><span class="muted">Method:</span> <strong>${esc(p.method)}</strong></div>
-      <div><span class="muted">Status:</span> <span class="badge badge-${String(p.status).toLowerCase()}">${esc(p.status)}</span></div>
-      <div><span class="muted">Requested:</span> ${fmtDate(p.createdAt)}</div>
-  `;
-  if (p.method === "UPI") {
-    html += `
-      <div style="border-top:1px solid var(--border);padding-top:12px;">
-        <div><span class="muted">UPI ID:</span> <strong>${esc(p.upiId || "—")}</strong></div>
-        <div><span class="muted">Holder Name:</span> <strong>${esc(p.upiName || "—")}</strong></div>
-      </div>`;
-  } else {
-    html += `
-      <div style="border-top:1px solid var(--border);padding-top:12px;">
-        <div><span class="muted">Account Holder:</span> <strong>${esc(p.accountName || "—")}</strong></div>
-        <div><span class="muted">Account Number:</span> <strong>${esc(p.accountNumber || "—")}</strong></div>
-        <div><span class="muted">IFSC:</span> <strong>${esc(p.ifsc || "—")}</strong></div>
-        <div><span class="muted">Bank:</span> <strong>${esc(p.bankName || "—")}</strong></div>
-      </div>`;
-  }
-  html += `</div>`;
-  document.getElementById("payoutViewContent").innerHTML = html;
-  const approveBtn = document.getElementById("payoutApproveBtn");
-  const rejectBtn = document.getElementById("payoutRejectBtn");
-  if (p.status !== "Pending") {
-    approveBtn.style.display = "none";
-    rejectBtn.style.display = "none";
-  } else {
-    approveBtn.style.display = "";
-    rejectBtn.style.display = "";
-  }
-  openModal("payoutViewModal");
-}
-
-document.getElementById("payoutApproveBtn")?.addEventListener("click", async () => {
-  if (!currentPayoutId) return;
-  try {
-    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
-      status: "Approved",
-      approvedAt: Date.now(),
-      approvedBy: auth.currentUser?.uid || "admin"
-    });
-    toast("Payout approved ✅", "success");
-    closeModal("payoutViewModal");
-    currentPayoutId = null;
-  } catch (e) {
-    toast("Failed: " + friendly(e), "error");
-  }
-});
-
-document.getElementById("payoutRejectBtn")?.addEventListener("click", async () => {
-  if (!currentPayoutId) return;
-  try {
-    await update(ref(db, `payoutRequests/${currentPayoutId}`), {
-      status: "Rejected",
-      rejectedAt: Date.now(),
-      rejectedBy: auth.currentUser?.uid || "admin"
-    });
-    toast("Payout rejected", "success");
-    closeModal("payoutViewModal");
-    currentPayoutId = null;
-  } catch (e) {
-    toast("Failed: " + friendly(e), "error");
-  }
-});
-
-function initAdminPayoutsSubscription() {
-  if (adminPayoutUnsub) return;
-  adminPayoutUnsub = onValue(ref(db, "payoutRequests"), (snap) => {
-    adminPayoutRequests = snap.val() || {};
-    renderAdminPayouts();
-    updateAdminPayoutBadge();
-  }, (err) => {
-    console.error("payout read error:", err);
-  });
-
-  const pf = document.getElementById("payoutStatusFilter");
-  if (pf && !pf.dataset.wired) {
-    pf.dataset.wired = "1";
-    pf.addEventListener("change", renderAdminPayouts);
-  }
-}
-
-let agentPayoutRequests = {};
-let agentPayoutUnsub = null;
-
-function calcAgentAvailableBalance() {
-  const profile = agentState.profile;
-  if (!profile) return 0;
-  return calcAvailableBalance(profile.agentId, agentState.transactions, agentPayoutRequests);
-}
-
-function renderAgentPayouts() {
-  const tbody = document.querySelector("#agentPayoutsTable tbody");
-  if (!tbody) return;
-  const list = Object.entries(agentPayoutRequests || {})
-    .filter(([,p]) => !agentState.profile || p.agentId === agentState.profile.agentId)
+function viewAgentClient(id){
+  const c = agentState.clients[id];
+  if (!c) return;
+  const txList = Object.entries(agentState.transactions)
+    .filter(([,t]) => t.clientId === id)
     .sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
-  if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty">No payout requests yet.</td></tr>`;
-    return;
+
+  let txHtml = "";
+  if (txList.length) {
+    txHtml = `
+      <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:6px;">
+        <h4 style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">Transactions (${txList.length})</h4>
+        <div style="max-height:200px;overflow-y:auto;">
+          ${txList.map(([id, t]) => `
+            <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;display:flex;justify-content:space-between;">
+              <span>${fmtDate(t.createdAt)} · ${esc(t.type)}</span>
+              <span>${fmtMoney(t.amount)} → <strong>${fmtMoney(t.commissionAmount)}</strong></span>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
   }
-  tbody.innerHTML = list.map(([id, p]) => {
-    let details = p.method === "UPI"
-      ? `UPI: ${esc(p.upiId || "—")}`
-      : `A/C: ${esc(p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—")}`;
-    return `
-      <tr>
-        <td>${fmtDate(p.createdAt)}</td>
-        <td>${fmtMoney(p.amount)}</td>
-        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
-        <td>${details}</td>
-        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
-      </tr>`;
-  }).join("");
+
+  $("clientViewContent").innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div><span class="muted">Name:</span> <strong>${esc(c.name)}</strong></div>
+        <div><span class="muted">Phone:</span> <strong>${esc(c.phone)}</strong></div>
+        <div><span class="muted">Business:</span> <strong>${esc(c.businessType || "—")}</strong></div>
+        <div><span class="muted">Status:</span> <span class="badge badge-${(c.status||"pending").toLowerCase()}">${esc(c.status || "Pending")}</span></div>
+        <div><span class="muted">Balance:</span> <strong>${fmtMoney(c.currentBalance || 0)}</strong></div>
+        <div><span class="muted">Commission:</span> <strong>${fmtMoney(c.commissionEarned || 0)}</strong></div>
+      </div>
+      ${txHtml}
+    </div>
+  `;
+  $("clientSaveBtn").style.display = "none";
+  $("clientEditBtn").style.display = "none";
+  $("clientRejectBtn").style.display = "none";
+  openModal("clientViewModal");
 }
 
-function openPayoutModal() {
-  const avail = calcAgentAvailableBalance();
-  if (avail <= 0) {
-    toast("No balance available for payout.", "error");
-    return;
-  }
-  document.getElementById("payoutAvailBal").textContent = fmtMoney(avail);
-  document.getElementById("payoutAmountInput").value = "";
-  document.getElementById("payoutAmountInput").max = avail;
-  document.getElementById("payoutMethodInput").value = "Bank Transfer";
-  document.getElementById("bankFields").classList.remove("hidden");
-  document.getElementById("upiFields").classList.add("hidden");
-  ["payoutAccName","payoutAccNo","payoutIfsc","payoutBankName","payoutUpiId","payoutUpiName"].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = "";
-  });
-  const errEl = document.getElementById("payoutFormError");
-  if (errEl) errEl.classList.add("hidden");
-  openModal("payoutModal");
+function openClientModal(){
+  $("clientModalTitle").textContent = "Add New Client";
+  $("clientEditId").value = "";
+  $("clientNameInput").value = "";
+  $("clientPhoneInput").value = "";
+  $("clientBusinessInput").value = "";
+  $("clientVolumeInput").value = "";
+  $("clientNotesInput").value = "";
+  hide($("clientFormError"));
+  openModal("clientModal");
 }
 
-async function onPayoutSubmit(e) {
+async function onClientSubmit(e){
   e.preventDefault();
-  const errEl = document.getElementById("payoutFormError");
-  if (errEl) errEl.classList.add("hidden");
+  const errEl = $("clientFormError"); hide(errEl);
   const profile = agentState.profile;
   if (!profile) return;
 
-  const amount = parseFloat(document.getElementById("payoutAmountInput").value);
-  const method = document.getElementById("payoutMethodInput").value;
+  const name = $("clientNameInput").value.trim();
+  const phone = $("clientPhoneInput").value.trim();
+  const businessType = $("clientBusinessInput").value;
+  const expectedVolume = parseFloat($("clientVolumeInput").value) || 0;
+  const notes = $("clientNotesInput").value.trim();
 
-  if (!(amount > 0)) {
-    if (errEl) { errEl.textContent = "Amount must be greater than 0."; errEl.classList.remove("hidden"); }
-    return;
-  }
+  if (!name || !phone || !businessType){ errEl.textContent = "Fill all required fields."; show(errEl); return; }
+  if (!/^[+\d][\d\s\-()]{7,}$/.test(phone)){ errEl.textContent = "Invalid phone number."; show(errEl); return; }
+
+  try {
+    const newRef = push(ref(db, "clients"));
+    await set(newRef, {
+      agentId: profile.agentId,
+      agentName: profile.name,
+      name, phone, businessType, expectedVolume, notes,
+      status: "Pending",
+      currentBalance: 0,
+      commissionRate: 0,
+      commissionEarned: 0,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    });
+    toast("Client submitted ✅ Admin will review", "success");
+    closeModal("clientModal");
+  } catch(err){ errEl.textContent = friendly(err); show(errEl); }
+}
+
+/* ============================================================
+   AGENT — PAYOUTS
+============================================================ */
+function renderAgentPayouts(){
+  const tbody = $("agentPayoutsTable")?.querySelector("tbody");
+  if (!tbody) return;
+  const list = Object.entries(agentState.payoutRequests).sort((a,b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+  if (!list.length){ tbody.innerHTML = `<tr><td colspan="5" class="empty">No payout requests yet.</td></tr>`; return; }
+  tbody.innerHTML = list.map(([id, p]) => {
+    let details = p.method === "UPI" ? `UPI: ${esc(p.upiId || "—")}` : `A/C: ${esc(p.accountNumber ? "****" + String(p.accountNumber).slice(-4) : "—")}`;
+    return `
+      <tr>
+        <td>${fmtDate(p.createdAt)}</td>
+        <td>${fmtMoney(p.amount)}</td>
+        <td><span class="badge badge-${p.method === "UPI" ? "upi" : "bank"}">${esc(p.method)}</span></td>
+        <td>${details}</td>
+        <td><span class="badge badge-${String(p.status||"").toLowerCase()}">${esc(p.status)}</span></td>
+      </tr>`;
+  }).join("");
+}
+
+function openPayoutModal(){
   const avail = calcAgentAvailableBalance();
-  if (amount > avail) {
-    if (errEl) { errEl.textContent = `Amount exceeds available balance (${fmtMoney(avail)}).`; errEl.classList.remove("hidden"); }
-    return;
-  }
-  const payload = {
-    agentId: profile.agentId,
-    agentName: profile.name,
-    amount,
-    method,
-    status: "Pending",
-    createdAt: Date.now()
-  };
+  if (avail <= 0){ toast("No balance available for payout.", "error"); return; }
+  $("payoutAvailBal").textContent = fmtMoney(avail);
+  $("payoutAmountInput").value = "";
+  $("payoutAmountInput").max = avail;
+  $("payoutMethodInput").value = "Bank Transfer";
+  $("bankFields").classList.remove("hidden");
+  $("upiFields").classList.add("hidden");
+  ["payoutAccName","payoutAccNo","payoutIfsc","payoutBankName","payoutUpiId","payoutUpiName"].forEach(id => {
+    const el = $(id); if (el) el.value = "";
+  });
+  hide($("payoutFormError"));
+  openModal("payoutModal");
+}
+
+async function onPayoutSubmit(e){
+  e.preventDefault();
+  const errEl = $("payoutFormError"); hide(errEl);
+  const profile = agentState.profile;
+  if (!profile) return;
+  const amount = parseFloat($("payoutAmountInput").value);
+  const method = $("payoutMethodInput").value;
+
+  if (!(amount > 0)){ errEl.textContent = "Amount > 0."; show(errEl); return; }
+  const avail = calcAgentAvailableBalance();
+  if (amount > avail){ errEl.textContent = `Amount exceeds available balance (${fmtMoney(avail)}).`; show(errEl); return; }
+
+  const payload = { agentId: profile.agentId, agentName: profile.name, amount, method, status: "Pending", createdAt: Date.now() };
+
   if (method === "UPI") {
-    const upiId = document.getElementById("payoutUpiId").value.trim();
-    const upiName = document.getElementById("payoutUpiName").value.trim();
-    if (!upiId || !upiName) {
-      if (errEl) { errEl.textContent = "Fill UPI ID and Holder Name."; errEl.classList.remove("hidden"); }
-      return;
-    }
-    payload.upiId = upiId;
-    payload.upiName = upiName;
+    const upiId = $("payoutUpiId").value.trim();
+    const upiName = $("payoutUpiName").value.trim();
+    if (!upiId || !upiName){ errEl.textContent = "Fill UPI ID and Holder Name."; show(errEl); return; }
+    payload.upiId = upiId; payload.upiName = upiName;
   } else {
-    const accName = document.getElementById("payoutAccName").value.trim();
-    const accNo = document.getElementById("payoutAccNo").value.trim();
-    const ifsc = document.getElementById("payoutIfsc").value.trim().toUpperCase();
-    const bankName = document.getElementById("payoutBankName").value.trim();
-    if (!accName || !accNo || !ifsc || !bankName) {
-      if (errEl) { errEl.textContent = "Fill all bank details."; errEl.classList.remove("hidden"); }
-      return;
-    }
-    if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)) {
-      if (errEl) { errEl.textContent = "Invalid IFSC format."; errEl.classList.remove("hidden"); }
-      return;
-    }
-    payload.accountName = accName;
-    payload.accountNumber = accNo;
-    payload.ifsc = ifsc;
-    payload.bankName = bankName;
+    const accName = $("payoutAccName").value.trim();
+    const accNo = $("payoutAccNo").value.trim();
+    const ifsc = $("payoutIfsc").value.trim().toUpperCase();
+    const bankName = $("payoutBankName").value.trim();
+    if (!accName || !accNo || !ifsc || !bankName){ errEl.textContent = "Fill all bank details."; show(errEl); return; }
+    if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(ifsc)){ errEl.textContent = "Invalid IFSC format."; show(errEl); return; }
+    payload.accountName = accName; payload.accountNumber = accNo; payload.ifsc = ifsc; payload.bankName = bankName;
   }
 
   try {
@@ -1770,44 +1986,12 @@ async function onPayoutSubmit(e) {
     await set(newRef, payload);
     toast("Payout request submitted ✅", "success");
     closeModal("payoutModal");
-  } catch (err) {
-    if (errEl) { errEl.textContent = friendly(err); errEl.classList.remove("hidden"); }
-  }
+  } catch(err){ errEl.textContent = friendly(err); show(errEl); }
 }
 
-function initAgentPayoutsSubscription(profile) {
-  if (agentPayoutUnsub) return;
-  const q = query(ref(db, "payoutRequests"), orderByChild("agentId"), equalTo(profile.agentId));
-  agentPayoutUnsub = onValue(q, (snap) => {
-    agentPayoutRequests = snap.val() || {};
-    renderAgentPayouts();
-    renderAgentStats();
-  }, (err) => {
-    console.error("agent payout read:", err);
-  });
-
-  const b1 = document.getElementById("requestPayoutBtn");
-  const b2 = document.getElementById("requestPayoutBtn2");
-  if (b1 && !b1.dataset.wired) { b1.dataset.wired = "1"; b1.addEventListener("click", openPayoutModal); }
-  if (b2 && !b2.dataset.wired) { b2.dataset.wired = "1"; b2.addEventListener("click", openPayoutModal); }
-
-  const methodEl = document.getElementById("payoutMethodInput");
-  if (methodEl && !methodEl.dataset.wired) {
-    methodEl.dataset.wired = "1";
-    methodEl.addEventListener("change", () => {
-      const isBank = methodEl.value === "Bank Transfer";
-      document.getElementById("bankFields").classList.toggle("hidden", !isBank);
-      document.getElementById("upiFields").classList.toggle("hidden", isBank);
-    });
-  }
-
-  const form = document.getElementById("payoutForm");
-  if (form && !form.dataset.wired) {
-    form.dataset.wired = "1";
-    form.addEventListener("submit", onPayoutSubmit);
-  }
-}
-
+/* ============================================================
+   INITIAL HIDE
+============================================================ */
 hide($("app-admin"));
 hide($("app-agent"));
 
