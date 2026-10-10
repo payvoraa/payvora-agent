@@ -608,6 +608,10 @@ body[data-theme="light"] .auth-body{background:radial-gradient(900px 500px at 15
     <div class="modal-head"><h3>Client Details</h3><button class="icon-btn" data-close="clientViewModal">✕</button></div>
     <div class="modal-body">
       <div id="clientViewContent"></div>
+            <div id="clientTransactionsSection" style="border-top:1px solid var(--border);padding-top:14px;margin-top:10px;">
+        <h4 style="font-size:13px;color:var(--text-dim);margin-bottom:10px;font-weight:600;">Client Transactions</h4>
+        <div id="clientTransactionsList" style="max-height:300px;overflow-y:auto;"></div>
+      </div>
       <div id="clientViewError" class="alert alert-error hidden"></div>
       <div class="modal-actions" id="clientViewActions">
         <button class="btn btn-danger" id="clientRejectBtn">Reject</button>
@@ -1509,13 +1513,61 @@ function openClientView(id){
     </div>
   `;
 
-  $("clientSaveBtn").style.display = readOnly ? "none" : "";
+    $("clientSaveBtn").style.display = readOnly ? "none" : "";
   $("clientEditBtn").style.display = readOnly ? "none" : "none";
   $("clientRejectBtn").style.display = c.status === "Pending" ? "" : "none";
 
+  renderClientTransactions(id);
   openModal("clientViewModal");
 }
 
+/* ============================================================
+   CLIENT TRANSACTIONS - RENDER & DELETE
+============================================================ */
+function renderClientTransactions(clientId){
+  const container = $("clientTransactionsList");
+  if (!container) return;
+  const txs = Object.entries(adminState.transactions)
+    .filter(([, t]) => t.clientId === clientId)
+    .sort((a, b) => (b[1].createdAt || 0) - (a[1].createdAt || 0));
+
+  if (!txs.length) {
+    container.innerHTML = `<p class="muted" style="text-align:center;padding:20px;font-size:12px;">No transactions for this client.</p>`;
+    return;
+  }
+
+  container.innerHTML = txs.map(([id, t]) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;gap:10px;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          ${fmtMoney(t.amount)}
+          <span class="badge badge-${t.type === "PAYIN" ? "payin" : "payout"}">${esc(t.type)}</span>
+          <span class="badge badge-${String(t.status||"").toLowerCase()}">${esc(t.status)}</span>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:5px;">
+          ${fmtDate(t.createdAt)} · Commission: <strong>${fmtMoney(t.commissionAmount)}</strong> (${Number(t.commissionRate||0).toFixed(2)}%)
+        </div>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-tx-delete="${esc(id)}" style="color:#ff5d6c;border-color:rgba(255,93,108,.3);font-size:14px;padding:6px 10px;" title="Delete transaction">🗑️</button>
+    </div>
+  `).join("");
+
+  container.querySelectorAll("[data-tx-delete]").forEach(btn => {
+    btn.addEventListener("click", () => deleteTransaction(btn.dataset.txDelete));
+  });
+}
+
+async function deleteTransaction(txId){
+  const ok = await confirmDialog("Delete Transaction", "This will permanently delete this transaction. Agent panel se bhi hat jayega. Continue?");
+  if (!ok) return;
+  try {
+    await remove(ref(db, `transactions/${txId}`));
+    toast("Transaction deleted ✅", "success");
+    if (currentClientId) renderClientTransactions(currentClientId);
+  } catch(e) {
+    toast("Delete failed: " + friendly(e), "error");
+  }
+}
 function onClientEdit(){
   clientEditMode = true;
   ["cvName","cvPhone","cvBusiness","cvVolume","cvBalance","cvRate","cvNotes"].forEach(id => {
